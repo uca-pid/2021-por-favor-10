@@ -26,6 +26,19 @@ class UserTest extends TestCase
     }
 
     /**
+     * An unregistered user tries to access home page
+     *
+     * @return void
+     */
+    public function testRedirectToLogin()
+    {
+        $response = $this->get('/home');
+
+        $response->assertRedirect('/login');
+        $response->assertLocation('/login');
+    }
+
+    /**
      * The registration form can be displayed.
      *
      * @return void
@@ -89,6 +102,7 @@ class UserTest extends TestCase
         $response = $this->get('/login');
 
         $response->assertStatus(200);
+        $response->assertSee('Inicio de sesión');
     }
 
     /**
@@ -145,4 +159,17 @@ class UserTest extends TestCase
         $this->assertGuest();
     }
 
+    /**
+     * A registered user tries to access home page
+     *
+     * @return void
+     */
+    public function testContinueIfLoggedIn()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get('/home');
+
+        $this->assertAuthenticated();
+        $response->assertSee("You are logged in!");
+    }
 }
