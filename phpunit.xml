@@ -16,7 +16,6 @@
         <include>
             <directory suffix=".php">./app/Http</directory>
             <directory suffix=".php">./app/Models</directory>
-            <directory suffix=".php">./app/Providers</directory>
         </include>
         <exclude>
             <file suffix=".php">./app/Http/Middleware/EncryptCookies.php</file>
@@ -25,6 +24,7 @@
             <file suffix=".php">./app/Http/Middleware/TrustHosts.php</file>
             <file suffix=".php">./app/Http/Middleware/TrustProxies.php</file>
             <file suffix=".php">./app/Providers/BroadcastServiceProvider.php</file>
+            <file suffix=".php">./app/Console/Kernel.php</file>
         </exclude>
         <report>
             <html outputDirectory="public/coverage"/>

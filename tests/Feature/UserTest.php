@@ -274,4 +274,25 @@ class UserTest extends TestCase
         $response = $this->$method($route);
         $response->assertLocation('/login');
     }
+
+    /**
+     * @test
+     * @dataProvider protectedRoutesProvider
+     * @param $method
+     * @param $route
+     */
+    public function testConfirmPassword()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $this->assertAuthenticated();
+
+        $response = $this->get('password/confirm');
+        $response->assertSee("Confirmar contraseña");
+        $response = $this->post('/password/confirm', [
+            'password' => 'password',
+        ]);
+        $this->assertAuthenticated();
+        $response->assertStatus(302);
+    }
 }
