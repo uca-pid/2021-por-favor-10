@@ -7,12 +7,25 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Hash;
+
 use Tests\TestCase;
 use App\Models\User;
 
 class UserTest extends TestCase
 {
     use DatabaseTransactions;
+
+    public function protectedRoutesProvider()
+    {
+        return [
+          'A guest is not authorized to visit the home page' => ['get', '/home'],
+       ];
+    }
+
     /**
      * A basic feature test example.
      *
@@ -57,7 +70,7 @@ class UserTest extends TestCase
      */
     public function testRegistersAValidUser()
     {
-        $this->withoutMiddleware();
+        // $this->withoutMiddleware();
         $user = User::factory()->create();
 
         $this->actingAs($user);
@@ -69,6 +82,7 @@ class UserTest extends TestCase
         ]);
 
         $response->assertStatus(302);
+        $this->assertAuthenticated();
     }
 
     /**
@@ -170,6 +184,94 @@ class UserTest extends TestCase
         $response = $this->actingAs($user)->get('/home');
 
         $this->assertAuthenticated();
-        $response->assertSee("You are logged in!");
+        $response->assertSee("Ha iniciado sesión!");
+    }
+
+
+    /**
+     * Displays the reset password request form.
+     *
+     * @return void
+     */
+    public function testDisplaysPasswordResetRequestForm()
+    {
+        $response = $this->get('password/reset');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Sends the password reset email when the user exists.
+     *
+     * @return void
+     */
+    public function testSendsPasswordResetEmail()
+    {
+        $user = User::factory()->create();
+
+        $this->expectsNotification($user, ResetPassword::class);
+
+        $response = $this->post('password/email', ['email' => $user->email]);
+
+        $response->assertStatus(302);
+    }
+
+    /**
+     * Does not send a password reset email when the user does not exist.
+     *
+     * @return void
+     */
+    public function testDoesNotSendPasswordResetEmail()
+    {
+        $this->doesntExpectJobs(ResetPassword::class);
+
+        $this->post('password/email', ['email' => 'invalid@email.com']);
+    }
+
+    /**
+     * Displays the form to reset a password.
+     *
+     * @return void
+     */
+    public function testDisplaysPasswordResetForm()
+    {
+        $response = $this->get('/password/reset/token');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Allows a user to reset their password.
+     *
+     * @return void
+     */
+    public function testChangesAUsersPassword()
+    {
+        $user = User::factory()->create();
+
+        $token = Password::createToken($user);
+
+        $response = $this->post('/password/reset', [
+            'token' => $token,
+            'email' => $user->email,
+            'password' => 'password',
+            'password_confirmation' => 'password'
+        ]);
+
+        $this->assertTrue(Hash::check('password', $user->fresh()->password));
+    }
+
+
+
+    /**
+     * @test
+     * @dataProvider protectedRoutesProvider
+     * @param $method
+     * @param $route
+     */
+    public function testGuests_are_redirected_to_login($method, $route)
+    {
+        $response = $this->$method($route);
+        $response->assertLocation('/login');
     }
 }
