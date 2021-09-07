@@ -19,12 +19,59 @@
     <!-- Styles -->
     <!-- CSS only -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background-color: #093446 !important;">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var url = window.location;
+            // $('ul.nav li.nav-item a[href="'+ url +'"]').parent().addClass('active');
+            $('ul.nav li.nav-item a.nav-link').filter(function() {
+                 return this.href == url;
+            }).addClass('active');
+
+            $('ul.nav li.nav-item a.dropdown-item').filter(function() {
+                 return this.href == url;
+            }).css('color', '#3490dc');
+            $('ul.nav li.nav-item a.dropdown-item').filter(function() {
+                 return this.href == url;
+            }).parent().parent().children('.dropdown-toggle').addClass('active');
+        });
+    </script>
+
+    <style type="text/css">
+        .nav .nav-item a.nav-link {
+            color: white !important;
+        }
+        ul.nav li.nav-item {
+            margin-right: 5px !important;
+        }
+
+        video {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            background-size: cover;
+            overflow: hidden;
+        }
+    </style>
+
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #082c3c !important;">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                <img
+                    src="{{ asset("media/logos/hercules blanco.png") }}"
+                    height="25"
+                    alt=""
+                    loading="lazy"
+                />
+                Hércules
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
@@ -32,12 +79,42 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
+                <ul class="nav nav-success nav-pills mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab-1" href="{{ route('welcome') }}" aria-controls="profile">
+                            <span class="nav-icon">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            <span class="nav-text">Clases</span>
+                        </a>
+                    </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="nav-icon">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span class="nav-text">{{ Auth::user()->name }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ route('perfil') }}">Mi perfil</a>
+                            <div class="dropdown-divider"></div>
+
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
+                <ul class="nav nav-success navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
@@ -54,14 +131,17 @@
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                <span class="nav-icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <span class="nav-text">{{ Auth::user()->name }}</span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Cerrar sesión') }}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -77,7 +157,29 @@
 </head>
 
 <body>
-    <div class="container-fluid vh-100">
+    <div class="container-fluid">
+        <div id="video-background">
+            <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
+                <source class="h-100" src="{{ asset('media/videos/background.mp4') }}" type="video/mp4" />
+            </video>
+            <div class="mask" style="
+            background: linear-gradient(
+              45deg,
+              rgba(29, 236, 197, 0.7),
+              rgba(21, 52, 219, 0.2) 100%
+            );
+            z-index: -1;
+            position: absolute;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            background-size: cover;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            ">
+        </div>
         @yield('content')
     </div>
 </body>
