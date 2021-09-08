@@ -22,7 +22,7 @@ class UserTest extends TestCase
     public function protectedRoutesProvider()
     {
         return [
-          'A guest is not authorized to visit the home page' => ['get', '/'],
+          'A guest is not authorized to visit the home page' => ['get', '/home'],
        ];
     }
 
@@ -33,7 +33,7 @@ class UserTest extends TestCase
      */
     public function testRedirectToLogin()
     {
-        $response = $this->get('/');
+        $response = $this->get('/home');
 
         $response->assertRedirect('/login');
         $response->assertLocation('/login');
@@ -169,7 +169,7 @@ class UserTest extends TestCase
     public function testContinueIfLoggedIn()
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/');
+        $response = $this->actingAs($user)->get('/home');
 
         $this->assertAuthenticated();
         $response->assertSee("Ha iniciado sesión!");
