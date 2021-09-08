@@ -18,24 +18,13 @@ use App\Models\User;
 class UserTest extends TestCase
 {
     use DatabaseTransactions;
+    use WithoutMiddleware;
 
     public function protectedRoutesProvider()
     {
         return [
-          'A guest is not authorized to visit the home page' => ['get', '/home'],
+          'A guest is not authorized to visit the home page' => ['get', '/'],
        ];
-    }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
     }
 
     /**
@@ -45,7 +34,7 @@ class UserTest extends TestCase
      */
     public function testRedirectToLogin()
     {
-        $response = $this->get('/home');
+        $response = $this->get('/');
 
         $response->assertRedirect('/login');
         $response->assertLocation('/login');
@@ -181,7 +170,7 @@ class UserTest extends TestCase
     public function testContinueIfLoggedIn()
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('/home');
+        $response = $this->actingAs($user)->get('/');
 
         $this->assertAuthenticated();
         $response->assertSee("Ha iniciado sesión!");

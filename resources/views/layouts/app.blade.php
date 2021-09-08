@@ -62,7 +62,7 @@
         }
     </style>
 
-    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #082c3c !important;">
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #002a3e !important;">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 <img
@@ -163,10 +163,10 @@
                 <source class="h-100" src="{{ asset('media/videos/background.mp4') }}" type="video/mp4" />
             </video>
             <div class="mask" style="
-            background: linear-gradient(
-              45deg,
-              rgba(29, 236, 197, 0.7),
-              rgba(21, 52, 219, 0.2) 100%
+                background: linear-gradient(
+                  45deg,
+                  rgba(5, 75, 122, 0.2),
+                  rgba(0, 146, 244, 0.7) 100%
             );
             z-index: -1;
             position: absolute;

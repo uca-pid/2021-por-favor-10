@@ -26,6 +26,11 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function landing()
+    {
+        return 'landing';
+    }
+
     public function welcome()
     {
         return view('test');

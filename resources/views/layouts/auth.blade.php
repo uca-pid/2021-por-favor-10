@@ -60,12 +60,12 @@
           rgba(91, 14, 214, 0.7) 100%
         );
         "> --}}
-        <div class="mask"     style="
-        background: linear-gradient(
-          45deg,
-          rgba(29, 236, 197, 0.7),
-          rgba(21, 52, 219, 0.2) 100%
-        );
+        <div class="mask" style="
+            background: linear-gradient(
+              45deg,
+              rgba(5, 75, 122, 0.2),
+              rgba(0, 146, 244, 0.7) 100%
+            );
         ">
 
         <div class="d-flex justify-content-center align-items-center vh-100">
