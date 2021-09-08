@@ -18,7 +18,6 @@ use App\Models\User;
 class UserTest extends TestCase
 {
     use DatabaseTransactions;
-    use WithoutMiddleware;
 
     public function protectedRoutesProvider()
     {
