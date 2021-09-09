@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Evento;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -15,6 +17,8 @@ use Tests\TestCase;
 
 class ClaseTest extends TestCase
 {
+
+	use DatabaseTransactions;
 
 	protected function clasesRoute()
     {
@@ -31,6 +35,12 @@ class ClaseTest extends TestCase
     protected function clasePostRoute()
     {
         return route('cargarClase');
+    }
+    public function testIfUserNotLoggedCantEnterClases()
+    {
+        $response = $this->get($this->clasesRoute());
+        $response->assertRedirect('/login');
+        $response->assertLocation('/login');
     }
     public function testClasesViewWorks()
     {
@@ -58,15 +68,26 @@ class ClaseTest extends TestCase
         $user = User::factory()->create();
         $this->actingAs($user);
         $evento = Evento::factory()->create();
-		$this->withoutMiddleware();
-        $response = $this->post('cargarClase', [
+        $response = $this->post('/cargarClase', [
             'title' => $evento->title,
-            'day' => '1',
-            'start' => $evento->start,
-            'end' => $evento->end,
-            'color' => $evento->color
+            'daysOfWeek' => $evento->day,
+            'startTime' => $evento->start,
+            'endTime' => $evento->start,
+			'color' => $evento->color
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201); //201 Creado
+    }
+    public function testClaseWithoutFieldsCantBeAddedToDb()
+    {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $evento = Evento::factory()->create();
+        $response = $this->post('/cargarClase', [
+        	//vacio
+        ]);
+
+        $response->assertStatus(500); //500 Falla
     }
 }
