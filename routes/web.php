@@ -20,13 +20,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('landing');
-});
+})->name('landing');
 
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/welcome', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
-Route::get('/landing', [App\Http\Controllers\HomeController::class, 'landing'])->name('landing');
+Route::get('/landing', [App\Http\Controllers\HomeController::class, 'landing']);
 Route::get('/perfil', [App\Http\Controllers\HomeController::class, 'perfil'])->name('perfil');
 
 
@@ -40,4 +40,11 @@ Auth::routes(['verify' => true]);
 
 // Route::middleware(['auth'])->group(function () {
 
+
+Route::get('/clasesCargadas', [App\Http\Controllers\HomeController::class, 'clasesCargadas'])->name('clasesCargadas');
+Route::get('/clases', [App\Http\Controllers\HomeController::class, 'clases'])->name('clases');
+Route::post('/cargarClase', [App\Http\Controllers\HomeController::class, 'cargarClase'])->name('cargarClase');
+
+// Route::get('/coverage', function () {
+//     return asset('coverage/index.html');
 // });

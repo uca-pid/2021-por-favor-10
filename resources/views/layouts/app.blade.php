@@ -11,6 +11,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/fullcalendar.js') }}"></script> --}}
+    <script src="{{ asset('js/fullcalendar.bundle.js') }}"></script>
+    {{-- <script src="{{ asset('js/es.js') }}"></script> --}}
+    <script src="{{ asset('js/fullCalendarLocale/es.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,9 +25,14 @@
     <!-- Styles -->
     <!-- CSS only -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/fullcalendar.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.bundle.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.bundle.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -156,7 +167,7 @@
     </nav>
 </head>
 
-<body>
+<body style="overflow-x: hidden; scroll-behavior: smooth;">
     <div class="container-fluid">
         <div id="video-background">
             <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
@@ -179,6 +190,8 @@
             bottom: 0;
             overflow: hidden;
             ">
+                {{-- @yield('content') --}}
+            </div>
         </div>
         @yield('content')
     </div>
