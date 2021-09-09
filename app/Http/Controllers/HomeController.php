@@ -65,6 +65,22 @@ class HomeController extends Controller
     }
     public function modificar()
     {
-        return view('modificar');
+        $query = Evento::all();
+        return view('modificar')->with('editables', $query);
+    }
+    public function modificarClase(Request $request)
+    {
+        $result = Evento::where('id',$request->id)->get();
+        return view('modificarClase')->with('editable', $result[0]);
+    }
+    public function generarCambios(Request $request)
+    {
+        return Evento::where('id',$request->id)->update(['title'=>$request->titulo,'start'=>$request->start,'end'=>$request->end,'day'=>$request->day]);
+        return redirect()->route('clases');
+    }
+    public function borrarClase(Request $request)
+    {
+        $borrado = Evento::where('id',$request->id)->delete();
+        return redirect()->route('clases');
     }
 }

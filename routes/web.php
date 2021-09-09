@@ -29,7 +29,9 @@ Route::get('/welcome', [App\Http\Controllers\HomeController::class, 'welcome'])-
 Route::get('/landing', [App\Http\Controllers\HomeController::class, 'landing']);
 Route::get('/perfil', [App\Http\Controllers\HomeController::class, 'perfil'])->name('perfil');
 Route::get('/modificar', [App\Http\Controllers\HomeController::class, 'modificar'])->name('modificar');
-
+Route::get('/modificar/{id}', [App\Http\Controllers\HomeController::class, 'modificarClase'])->name('modificarClase');
+Route::get('/borrar/{id}', [App\Http\Controllers\HomeController::class, 'borrarClase'])->name('borrarClase');
+Route::post('/generarCambios', [App\Http\Controllers\HomeController::class, 'generarCambios'])->name('generarCambios');
 
 Auth::routes(['verify' => true]);
 
