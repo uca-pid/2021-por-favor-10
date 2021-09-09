@@ -20,13 +20,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('landing');
-});
+})->name('landing');
 
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/welcome', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
-Route::get('/landing', [App\Http\Controllers\HomeController::class, 'landing'])->name('landing');
+Route::get('/landing', [App\Http\Controllers\HomeController::class, 'landing']);
 Route::get('/perfil', [App\Http\Controllers\HomeController::class, 'perfil'])->name('perfil');
 
 
