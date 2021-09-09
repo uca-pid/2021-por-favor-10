@@ -26,6 +26,7 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
     public function clases()
     {
         return view('clases');
@@ -45,5 +46,20 @@ class HomeController extends Controller
         }
         return response()->json($responseQuery);
         /*return response()->json([["id" => "2312" , "title" => "my event", "start" => "2021-09-09T09:00:00", "end" => "2021-09-09T10:00:00"],["id" => "2311" , "title" => "my event1", "startTime" => "9:00:00", "endTime" => "10:00", "daysOfWeek" => "6", "color" => "yellow"]]);*/
+    }
+
+    public function landing()
+    {
+        return 'landing';
+    }
+
+    public function welcome()
+    {
+        return view('test');
+    }
+
+    public function perfil()
+    {
+        return view('perfil');
     }
 }

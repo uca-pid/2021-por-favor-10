@@ -66,10 +66,14 @@
                         </div> --}}
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-12 offset-md-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Ingresar') }}
                                 </button>
+
+                                <a class="btn btn-link btn-hover text-muted" href="{{ route('register') }}">
+                                    {{ __('Quiero registrarme') }}
+                                </a>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link text-muted" href="{{ route('password.request') }}">

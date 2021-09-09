@@ -8,7 +8,7 @@
             <br>
 
             <div class="card">
-                <div class="card-header">{{ __('Bienvenido') }}</div>
+                <div class="card-header">{{ __('Bienvenido!') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -16,8 +16,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    {{ __('Ha iniciado sesion!') }}
+                    {{ __('Ha iniciado sesión!') }}
                 </div>
 
             </div>

@@ -23,6 +23,8 @@
     },
     "dependencies": {
         "fullcalendar": "^5.9.0",
-        "sweetalert2": "^11.1.5"
+        "sweetalert2": "^11.1.5",
+        "@fortawesome/fontawesome-free": "^5.15.4",
+        "composer": "^4.1.0"
     }
 }

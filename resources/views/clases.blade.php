@@ -7,17 +7,19 @@
         document.addEventListener('DOMContentLoaded', function() {
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
+                        themeSystem: 'bootstrap',
                         events: {
                             url: '{{ route('clasesCargadas') }}',
                             method: 'GET',
                         },
-                        initialView: 'dayGridWeek',
+                        initialView: 'dayGridMonth',
                         headerToolbar: {
                             left: 'prev,next today',
                             center: 'addEventButton',
-                            right: 'timeGridWeek,timeGridDay,listWeek',
+                            right: 'timeGridWeek,timeGridDay,dayGridMonth,listWeek',
                         },
                         selectable: true,
+                        editable: true,
                         nowIndicator: true,
                         dayMaxEvents: true,
                         customButtons: {
@@ -110,7 +112,7 @@
                 //var today = new Date('2021-09-10T08:00:00');
                 //var today2 = new Date('2021-09-10T10:00:00');
                 calendar.addEvent({
-                    title: 'hola',
+                    title: 'Clase demo',
                     startTime: '8:00',
                     endTime: '10:00',
                     allDay: false,
@@ -120,7 +122,7 @@
        
     </script>
 
-<div class="container">
+<div class="container bg-white" style="overflow: scroll;">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <br>

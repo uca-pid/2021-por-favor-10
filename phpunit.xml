@@ -16,14 +16,15 @@
         <include>
             <directory suffix=".php">./app/Http</directory>
             <directory suffix=".php">./app/Models</directory>
-            <directory suffix=".php">./app/Providers</directory>
         </include>
         <exclude>
-            <file suffix=".php">./app/Http/Middleware/EncryptCookies.php</file>
-            <file suffix=".php">./app/Http/Middleware/PreventRequestsDuringMaintenance.php</file>
-            <file suffix=".php">./app/Http/Middleware/TrimStrings.php</file>
-            <file suffix=".php">./app/Http/Middleware/TrustHosts.php</file>
-            <file suffix=".php">./app/Http/Middleware/TrustProxies.php</file>
+            <file>./app/Http/Middleware/EncryptCookies.php</file>
+            <file>./app/Http/Middleware/PreventRequestsDuringMaintenance.php</file>
+            <file>./app/Http/Middleware/TrimStrings.php</file>
+            <file>./app/Http/Middleware/TrustHosts.php</file>
+            <file>./app/Http/Middleware/TrustProxies.php</file>
+            <file>./app/Providers/BroadcastServiceProvider.php</file>
+            <file>./app/Console/Kernel.php</file>
         </exclude>
         <report>
             <html outputDirectory="public/coverage"/>
@@ -33,8 +34,8 @@
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
-        <!-- <server name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <server name="DB_DATABASE" value=":memory:"/> -->
+        <!-- <server name="DB_CONNECTION" value="sqlite"/>
+        <server name="DB_DATABASE" value=":memory:"/> -->
         <server name="MAIL_MAILER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>

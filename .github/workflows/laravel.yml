@@ -31,5 +31,5 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: pgsql
-        DB_DATABASE: database/database.pgsql
+        DB_DATABASE: d7m4nv5phkglkd
       run: vendor/bin/phpunit
