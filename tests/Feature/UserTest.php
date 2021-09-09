@@ -170,6 +170,6 @@ class UserTest extends TestCase
         $response = $this->actingAs($user)->get('/home');
 
         $this->assertAuthenticated();
-        $response->assertSee("You are logged in!");
+        $response->assertSee("Ha iniciado sesion!");
     }
 }
