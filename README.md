@@ -1,6 +1,6 @@
 ## Hércules Gym App
 <p align="right">
-    <img>![Actions Status](https://github.com/estanimw/herculesPID/actions/workflows/laravel.yml/badge.svg)</img>
+    <img src="https://github.com/estanimw/herculesPID/actions/workflows/laravel.yml/badge.svg">
 </p>
 
 Hércules Gym es la aplicación web de un gimnasio.
