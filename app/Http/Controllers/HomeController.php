@@ -75,7 +75,7 @@ class HomeController extends Controller
     }
     public function generarCambios(Request $request)
     {
-        return Evento::where('id',$request->id)->update(['title'=>$request->titulo,'start'=>$request->start,'end'=>$request->end,'day'=>$request->day]);
+        Evento::where('id',$request->id)->update(['title'=>$request->titulo,'start'=>$request->start,'end'=>$request->end,'day'=>$request->day]);
         return redirect()->route('clases');
     }
     public function borrarClase(Request $request)
