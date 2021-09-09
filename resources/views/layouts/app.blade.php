@@ -11,8 +11,10 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/fullcalendar.js') }}"></script>
-    <script src="{{ asset('js/es.js') }}"></script>
+    {{-- <script src="{{ asset('js/fullcalendar.js') }}"></script> --}}
+    <script src="{{ asset('js/fullcalendar.bundle.js') }}"></script>
+    {{-- <script src="{{ asset('js/es.js') }}"></script> --}}
+    <script src="{{ asset('js/fullCalendarLocale/es.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
@@ -26,8 +28,11 @@
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.bundle.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.bundle.css') }}">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
