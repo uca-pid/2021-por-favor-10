@@ -54,7 +54,7 @@ body {
 header {
 	width: 100%;
 	float: left;
-	padding:58px 0;
+	/*padding:58px 0;*/
 }
 .navigation {
 	padding: 0 10px;
@@ -132,7 +132,7 @@ header {
 }
 .banner-text h2 span{
 	font-weight:900;
-	color:#f04e23;
+	color: #0165a9;
 }
 .banner-text p{
 	font-family: 'Montserrat', sans-serif;
@@ -146,7 +146,7 @@ a.getstartbtn{
 	display:block;
 	line-height:80px;
 	text-align:center;
-	background:#f04e23;
+	background:#0165a9;
 	color:#fff;
 	width:350px;
 	font-size:30px;	
@@ -155,7 +155,8 @@ a.getstartbtn{
 	text-transform:uppercase;
 }
 a.getstartbtn:hover{
-	background:#464646;
+	/*background:#464646;*/
+	color: white !important;
 }
 .start-sec{
 	width:100%;

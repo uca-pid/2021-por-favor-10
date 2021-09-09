@@ -296,6 +296,12 @@
                             element.find('.fc-list-item-title').append('<div class="fc-description">' + info.event.extendedProps.description + '</div>');
                         }
                     }
+                },
+
+                eventClick: function(calEvent, jsEvent, view) {
+                    $('#start_time').val(moment(calEvent.start).format('YYYY-MM-DD HH:mm:ss'));
+                    $('#finish_time').val(moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss'));
+                    $('#editModal').modal();
                 }
             });
             calendar.setOption('locale', 'es');
@@ -458,6 +464,29 @@ jQuery(document).ready(function() {
         <div class="col-md-12">
             <br>
             <div id="calendar"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4>Edit Appointment</h4>
+
+                    Start time:
+                    <br />
+                    <input type="text" class="form-control" name="start_time" id="start_time">
+
+                    End time:
+                    <br />
+                    <input type="text" class="form-control" name="finish_time" id="finish_time">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="button" class="btn btn-primary" id="appointment_update" value="Save">
+                </div>
+            </div>
         </div>
     </div>
 </div>

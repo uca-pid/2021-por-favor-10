@@ -32,20 +32,18 @@ Route::get('/modificar', [App\Http\Controllers\HomeController::class, 'modificar
 
 
 Auth::routes(['verify' => true]);
-// Auth::routes(['verify' => true]);
 
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/landing', [App\Http\Controllers\HomeController::class, 'landing'])->name('landing');
 // Route::get('/perfil', [App\Http\Controllers\HomeController::class, 'perfil'])->name('perfil');
 // Route::get('/welcome', [App\Http\Controllers\HomeController::class, 'welcome'])->name('welcome');
 
-// Route::middleware(['auth'])->group(function () {
 
 
 Route::get('/clasesCargadas', [App\Http\Controllers\HomeController::class, 'clasesCargadas'])->name('clasesCargadas');
 Route::get('/clases', [App\Http\Controllers\HomeController::class, 'clases'])->name('clases');
 Route::post('/cargarClase', [App\Http\Controllers\HomeController::class, 'cargarClase'])->name('cargarClase');
 
-// Route::get('/coverage', function () {
-//     return asset('coverage/index.html');
-// });
+Route::get('/coverage', function () {
+    return redirect('coverage/index.html');
+});

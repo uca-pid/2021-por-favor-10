@@ -61,13 +61,22 @@ $('#myModal').on('hide.bs.modal', function (e) {
   <header>
     <nav class="navbar navigation navbar-expand-md">
       <div class="container">
-        <div class="logo-sec"><a href="#" class="navbar-brand" title="MaxGymm">Max<span>Gymm</span></a></div>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse"> <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span> </button>
+        {{-- <div class="logo-sec"><a href="#" class="navbar-brand" title="MaxGymm">Hércules<span>Gym</span></a></div>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse"> <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span> </button> --}}
+        <img src="{{ asset('media/logos/Hércules Logo.png') }}" style="height: 10rem;">
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav ml-auto">
-            <li><a href="{{ route('landing') }}" class="active">Home</a><span>=</span></li>
-            <li><a href="{{ route('login') }}">Inicia Sesión</a><span>=</span></li>
-            <li><a href="{{ route('register') }}">Regístrate</a><span>=</span></li>
+            @auth
+              <li><a href="{{ route('home') }}" class="active">Inicio</a><span>=</span></li>
+              <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="active">Salir</a><span>=</span></li>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+              </form>
+            @endauth
+            @guest
+              <li><a href="{{ route('login') }}">Inicia Sesión</a><span>=</span></li>
+              <li><a href="{{ route('register') }}">Regístrate</a><span>=</span></li>
+            @endguest
           </ul>
         </div>
       </div>
@@ -75,12 +84,11 @@ $('#myModal').on('hide.bs.modal', function (e) {
   </header>
   <section class="banner-sec"> <img src="landing/images/banner.jpg" alt="">
     <div class="banner-text">
-      <h2>Get <span>Fit</span> Yourself, Always Wanted!</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipi scing elit, sed do
-  ipsum dolor sit amet adipiscing eliturna. Lorem convallis morbi.</p>
-      <a href="#" class="getstartbtn">Get Started</a> </div>
+      <h2>Mantente <span>en forma</span> con los servicios de Hércules!</h2>
+      <p>Ofrecemos las clases más completeas y dinámicas brindadas por profesores especializados en todas las áreas. Nuestros equipos son de primera calidad y tenemos protocolos adaptados para COVID-19.</p>
+      <a href="{{ route('register') }}" class="getstartbtn">¿Qué esperás para conocernos?</a> </div>
   </section>
-  <section class="start-sec">
+  {{-- <section class="start-sec">
     <section class="container">
       <h3>Start today for tomorrows health &amp; fitness</h3>
       <h6>Lorem ipsum dolor sit amet, consectetur adipi scing elit, sed do
@@ -199,7 +207,7 @@ $('#myModal').on('hide.bs.modal', function (e) {
         </div>
       </div>
     </section>
-  </section>
+  </section> --}}
 
   <footer>
   	<section class="container">
