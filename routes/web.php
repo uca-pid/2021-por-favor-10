@@ -46,6 +46,12 @@ Route::get('/clasesCargadas', [App\Http\Controllers\HomeController::class, 'clas
 Route::get('/clases', [App\Http\Controllers\HomeController::class, 'clases'])->name('clases');
 Route::post('/cargarClase', [App\Http\Controllers\HomeController::class, 'cargarClase'])->name('cargarClase');
 
+Route::get('/rutinas', [App\Http\Controllers\RutinasController::class, 'rutinas'])->name('rutinas');
+Route::post('/rutinas', [App\Http\Controllers\RutinasController::class, 'crearRutina'])->name('rutina_crear');
+
+Route::get('/ejercicios', [App\Http\Controllers\EjercicioController::class, 'ejercicios'])->name('ejercicios');
+Route::post('/ejercicios', [App\Http\Controllers\EjercicioController::class, 'crearEjercicio'])->name('ejercicio_crear');
+
 Route::get('/coverage', function () {
     return redirect('coverage/index.html');
 });
