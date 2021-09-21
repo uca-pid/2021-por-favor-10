@@ -18,6 +18,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -97,6 +100,15 @@
                                 <i class="fas fa-home"></i>
                             </span>
                             <span class="nav-text">Clases</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="modify" href="{{ route('usuariosClases') }}" aria-controls="modify">
+                            <span class="nav-icon">
+                                <i class="fas fa-edit"></i>
+                            </span>
+                            <span class="nav-text">UAC</span>
                         </a>
                     </li>
 

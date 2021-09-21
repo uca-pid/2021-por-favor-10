@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use App\Models\User;
+use App\Models\ClaseUser;
 
 class HomeController extends Controller
 {
@@ -26,7 +28,33 @@ class HomeController extends Controller
     {
         return view('home');
     }
-
+    public function usuariosClases()
+    {
+        $usuarios = User::all();
+        $clases = Evento::all();
+        return view('usuariosClases')->with('clases', $clases)->with('usuarios', $usuarios);
+    }
+    public function agregarUsuariosClases(Request $request)
+    {
+        $claseuser = ClaseUser::where('id_clase',$request->clase)->get();
+        if ( count($claseuser) == 0 )
+        {
+            return ClaseUser::create([ 'id_clase' => $request->clase , 'id_users' => json_encode([$request->user]) , 'cant_inscriptos' => 1]);
+        }
+        else
+        {
+            $arrayusers = json_decode(($claseuser[0])->id_users);
+            if(in_array($request->user ,$arrayusers))
+            {
+                return "El usuario ya esta en la clase";
+            }
+            else
+            {
+                array_push($arrayusers, $request->user);
+                return ClaseUser::where('id_clase',$request->clase)->update([ 'id_clase' => $request->clase , 'id_users' => json_encode($arrayusers) , 'cant_inscriptos' => (($claseuser[0])->cant_inscriptos+1)  ]);
+            }
+        }
+    }
     public function clases()
     {
         return view('clases');
