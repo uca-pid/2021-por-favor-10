@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -69,7 +69,7 @@
             height: auto;
             z-index: -2;
             background-size: cover;
-            overflow: hidden;
+            /*overflow: hidden;*/
         }
     </style>
 
@@ -91,7 +91,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav nav-success nav-pills mr-auto">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" id="profile-tab-1" href="{{ route('clases') }}" aria-controls="profile">
                             <span class="nav-icon">
                                 <i class="fas fa-home"></i>
@@ -107,8 +107,49 @@
                             </span>
                             <span class="nav-text">Modificar</span>
                         </a>
+                    </li> --}}
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="nav-icon">
+                                <i class="fas fa-school"></i>
+                            </span>
+                            <span class="nav-text">Clases</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ route('clases') }}">
+                                <span class="nav-icon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                                <span class="nav-text">Calendario</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('modificar') }}">
+                                <span class="nav-icon">
+                                    <i class="far fa-edit"></i>
+                                </span>
+                                <span class="nav-text">Modificar</span>
+                            </a>
+                        </div>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" id="modify" href="{{ route('rutinas') }}" aria-controls="modify">
+                            <span class="nav-icon">
+                                <i class="fas fa-edit"></i>
+                            </span>
+                            <span class="nav-text">Rutinas</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="modify" href="{{ route('ejercicios') }}" aria-controls="modify">
+                            <span class="nav-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </span>
+                            <span class="nav-text">Ejercicios</span>
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -153,10 +194,34 @@
         </div>
     </nav>
 </head>
-
+<header>
+    <div id="video-background">
+        <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
+            <source class="h-100" src="{{ asset('media/videos/background.mp4') }}" type="video/mp4" />
+        </video>
+        <div class="mask" style="
+            background: linear-gradient(
+              45deg,
+              rgba(5, 75, 122, 0.2),
+              rgba(0, 146, 244, 0.7) 100%
+        );
+        z-index: -1;
+        position: absolute;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        background-size: cover;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        ">
+        </div>
+    </div>
+</header>
 <body style="overflow-x: hidden; scroll-behavior: smooth;">
-    <div class="container-fluid">
-        <div id="video-background">
+    <div class="container-fluid overflow-auto">
+        {{-- <div id="video-background">
             <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
                 <source class="h-100" src="{{ asset('media/videos/background.mp4') }}" type="video/mp4" />
             </video>
@@ -177,10 +242,12 @@
             bottom: 0;
             overflow: hidden;
             ">
-                {{-- @yield('content') --}}
+
             </div>
+        </div> --}}
+        <div style="max-width: 100%; max-height: 100%;">
+            @yield('content')
         </div>
-        @yield('content')
     </div>
 </body>
 </html>
