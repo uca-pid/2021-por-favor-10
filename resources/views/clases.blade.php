@@ -347,85 +347,48 @@ jQuery(document).ready(function() {
                 customButtons: {
                     addEventButton: {
                       text: 'Agregar clase',
-                      click: async function() {
-                        var titleOfEvent = await Swal.fire({
-                                              title: 'Escribir nombre de la clase',
-                                              input: 'text',
-                                              inputLabel: 'Nombre de la clase',
-                                              showCancelButton: true,
-                                              inputValidator: (value) => {
-                                                if (!value) {
-                                                  return 'La clase tiene que tener nombre!'
-                                                }
-                                              }
-                                            });
-                        var dayOfEvent = await Swal.fire({
-                                          title: 'Seleccionar el dia de la clase',
-                                          input: 'select',
-                                          inputOptions: {
-                                            'Dias': {
-                                              '1': 'Lunes',
-                                              '2': 'Martes',
-                                              '3': 'Miercoles',
-                                              '4': 'Jueves',
-                                              '5': 'Viernes',
-                                              '6': 'Sabado',
-                                              '0': 'Domingo',
-                                            }
-                                          },
-                                          showCancelButton: true
-                                        });
-                        var tStart = await Swal.fire({
-                                              title: 'Hora inicio de la clase',
-                                              input: 'text',
-                                              inputLabel: '9:00',
-                                              showCancelButton: true,
-                                              inputValidator: (value) => {
-                                                if (!value) {
-                                                  return 'Tiene que escribir un horario!'
-                                                }
-                                              }
-                                            });
-                        var tEnd = await Swal.fire({
-                                              title: 'Hora fin de la clase',
-                                              input: 'text',
-                                              inputLabel: '11:00',
-                                              showCancelButton: true,
-                                              inputValidator: (value) => {
-                                                if (!value) {
-                                                  return 'Tiene que escribir un horario!'
-                                                }
-                                              }
-                                            });
-                        if (true) { // valid?
-                            calendar.addEvent({
-                                title: titleOfEvent.value,
-                                startTime: tStart.value,
-                                endTime: tEnd.value,
-                                allDay: false,
-                                daysOfWeek: [ dayOfEvent.value ],
-                                className:"fc-event-solid-primary"
-                            });
-                            $.ajax({
-                              url:"{{ route('cargarClase') }}",
-                              type:"POST",
-                              data:{
-                                "_token":"{{ csrf_token() }}",
-                                "title":titleOfEvent.value,
-                                "startTime":tStart.value,
-                                "endTime":tEnd.value,
-                                "daysOfWeek":dayOfEvent.value,
-                              },
-                              success:function(response){
-                                console.log(response)
-                              },
-                              error: function(xhr, textStatus, error){
-                              }
+                      click: async function() {                    
+
+                            $('#editModal').modal('show'); 
+                            $('#crear_modal').click(function() {
+                                var titleOfEvent = $('#titleOfEvent').val();
+                                var tStart = $('#tStart').val();
+                                var tEnd = $('#tEnd').val();
+                                var dayOfEvent = $('#dayOfEvent').val();
+
+                                calendar.addEvent({
+                                    title: titleOfEvent,
+                                    startTime: tStart,
+                                    endTime: tEnd,
+                                    allDay: false,
+                                    daysOfWeek: [ dayOfEvent ],
+                                    className:"fc-event-solid-primary"
+                                });
+                                $("#titleOfEvent").val('');
+                                $("#tStart").val('');
+                                $("#tEnd").val('');
+                                $("#dayOfEvent").val('');
+
+                                $.ajax({
+                                  url:"{{ route('cargarClase') }}",
+                                  type:"POST",
+                                  data:{
+                                    "_token":"{{ csrf_token() }}",
+                                    "title":titleOfEvent,
+                                    "startTime":tStart,
+                                    "endTime":tEnd,
+                                    "daysOfWeek":dayOfEvent,
+                                  },
+                                  success:function(response){
+                                    console.log(response);
+                                  },
+                                  error: function(xhr, textStatus, error){
+                                  }
+                                });
+
+                                $('#editModal').modal('hide');
                             });
 
-                        } else {
-                          //alert('Invalid date.');
-                        }
                       }
                     }
                 },
@@ -471,20 +434,76 @@ jQuery(document).ready(function() {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h4>Edit Appointment</h4>
-
-                    Start time:
+                    <h4>Crear clase</h4>
+                    <br>
+                    Titulo:
                     <br />
-                    <input type="text" class="form-control" name="start_time" id="start_time">
-
-                    End time:
+                    <input type="text" class="form-control" name="titleOfEvent" id="titleOfEvent" placeholder="Pilates...">
+                    <br>
+                    Hora inicio:
                     <br />
-                    <input type="text" class="form-control" name="finish_time" id="finish_time">
+                      <select class="custom-select" id="tStart">
+                        <option value="6:00">6:00</option>
+                        <option value="7:00">7:00</option>
+                        <option value="8:00">8:00</option>
+                        <option value="9:00">9:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="21:00">21:00</option>
+                        <option value="22:00">22:00</option>
+                        <option value="23:00">23:00</option>
+                      </select>
+                    <br> 
+                    <br>   
+                    Hora fin:
+                    <br />
+                      <select class="custom-select" id="tEnd">
+                        <option value="6:00">6:00</option>
+                        <option value="7:00">7:00</option>
+                        <option value="8:00">8:00</option>
+                        <option value="9:00">9:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="21:00">21:00</option>
+                        <option value="22:00">22:00</option>
+                        <option value="23:00">23:00</option>
+                      </select>
+                    <br>
+                    <br>
+                    Dia de la semana:
+                    <br />
+                      <select class="custom-select" id="dayOfEvent">
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miercoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <option value="6">Sabado</option>
+                        <option value="0">Domingo</option>
+                      </select>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="button" class="btn btn-primary" id="appointment_update" value="Save">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="cerrar_modal">Cerrar</button>
+                    <input type="button" class="btn btn-primary" id="crear_modal" value="Crear">
                 </div>
             </div>
         </div>
