@@ -39,7 +39,8 @@ class HomeController extends Controller
         $claseuser = ClaseUser::where('id_clase',$request->clase)->get();
         if ( count($claseuser) == 0 )
         {
-            return ClaseUser::create([ 'id_clase' => $request->clase , 'id_users' => json_encode([$request->user]) , 'cant_inscriptos' => 1]);
+            ClaseUser::create([ 'id_clase' => $request->clase , 'id_users' => json_encode([$request->user]) , 'cant_inscriptos' => 1]);
+            return redirect()->route('usuariosClases');
         }
         else
         {
@@ -51,7 +52,8 @@ class HomeController extends Controller
             else
             {
                 array_push($arrayusers, $request->user);
-                return ClaseUser::where('id_clase',$request->clase)->update([ 'id_clase' => $request->clase , 'id_users' => json_encode($arrayusers) , 'cant_inscriptos' => (($claseuser[0])->cant_inscriptos+1)  ]);
+                ClaseUser::where('id_clase',$request->clase)->update([ 'id_clase' => $request->clase , 'id_users' => json_encode($arrayusers) , 'cant_inscriptos' => (($claseuser[0])->cant_inscriptos+1)  ]);
+                return redirect()->route('usuariosClases');
             }
         }
     }
@@ -110,5 +112,11 @@ class HomeController extends Controller
     {
         $borrado = Evento::where('id',$request->id)->delete();
         return redirect()->route('clases');
+    }
+    public function estadisticasClases(Request $request)
+    {
+        $usuarios = User::all();
+        $clases = Evento::all();
+        return view('estadisticasClases')->with('clases', $clases)->with('usuarios', $usuarios);
     }
 }

@@ -35,6 +35,8 @@ Route::post('/generarCambios', [App\Http\Controllers\HomeController::class, 'gen
 
 
 Route::get('/usuariosClases', [App\Http\Controllers\HomeController::class, 'usuariosClases'])->name('usuariosClases');
+Route::get('/estadisticasClases', [App\Http\Controllers\HomeController::class, 'estadisticasClases'])->name('estadisticasClases');
+Route::get('/estadisticasClases/{clase}', [App\Http\Controllers\ApiController::class, 'apiFetchCantUsersInClases'])->name('cantUsersClase');
 Route::post('/agregarUsuariosClases', [App\Http\Controllers\HomeController::class, 'agregarUsuariosClases'])->name('agregarUsuariosClases');
 
 Auth::routes(['verify' => true]);
