@@ -142,6 +142,20 @@
                                 </span>
                                 <span class="nav-text">Modificar</span>
                             </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('usuariosClases') }}">
+                                <span class="nav-icon">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span class="nav-text">UAC</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('estadisticasClases') }}">
+                                <span class="nav-icon">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span class="nav-text">Estadísticas</span>
+                            </a>
                         </div>
                     </li>
 
