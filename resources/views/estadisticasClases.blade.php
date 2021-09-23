@@ -28,10 +28,14 @@
 				 			@endforeach     									 		
 					      </select>
 					    </div>
+					    <br>
+					    <div class="row" id="resultadosClase">
+					      
+					   </div>
 					<br>						       
 			  </div>
 			  <div class="card-footer text-muted">
-			    <button type="submit" class="btn btn-primary" id="submitClase">Buscar</button>
+			    <button type="button" class="btn btn-primary" id="submitClase" name="submitClase">Buscar</button>
 				</form>
 			  </div>
 			</div>
@@ -60,13 +64,14 @@
 
 					      </select>
 					   </div>
-					   <div class="row">
+					   <br>
+					   <div class="row" id="resultadosUser">
 					      
 					   </div>
 					<br>						       
 			  </div>
 			  <div class="card-footer text-muted">
-			    <button type="submit" class="btn btn-primary" id="submitUser">Buscar</button>
+			    <button type="button" class="btn btn-primary" id="submitUser" name="submitUser">Buscar</button>
 			    </form> 
 			  </div>
 			</div>
@@ -101,27 +106,46 @@
 
 <script type="text/javascript">
 
-    $('#postClase').submit(function(e){
+    $('#submitClase').click(function() {
+    	var clase = $('#clase').val();
+    	$.ajax({
+	      url:"/estadisticasClases/"+clase,
+	      type:"GET",
+	      data:{
+	        "_token":"{{ csrf_token() }}",
+	        "clase":clase,
+	      },
+	      success:function(response){
+	        //alert(response);
+	        $("#resultadosClase").empty();
+	        $('#resultadosClase').append('<p><strong>Cantidad de inscriptos: '+response+'</strong></p>');   
+	      },
+	      error: function(xhr, textStatus, error){
+	      }
+	    });
 
-        var clase = $('#clase').val();
-        var _token = $("input[name=_token]").val();
+	});
 
-        //alert(clase);
+    $('#submitUser').click(function() {
+    	var user = $('#user').val();
+    	$.ajax({
+	      url:"/estadisticasUsers/"+user,
+	      type:"GET",
+	      data:{
+	        "_token":"{{ csrf_token() }}",
+	        "user":user,
+	      },
+	      success:function(response){
+	        //alert(response);
+	        $("#resultadosUser").empty();
+	        $('#resultadosUser').append('<p><strong>Clases donde esta inscripto el usuario: '+response+'</strong></p>');   
+	      },
+	      error: function(xhr, textStatus, error){
+	      }
+	    });
 
-        $.ajax({
-          url:"{{ route('cantUsersClase', ['clase' => clase ]) }}",
-          type:"GET",
-          data:{
-            clase:clase
-            _token:_token
-          },
-          success:function(response){
-            console.log(response)
-          },
-          error: function(xhr, textStatus, error){
-          }
-        })
-    })
+	});
+
 
 </script>
 
