@@ -15,11 +15,13 @@
     <script src="{{ asset('js/fullcalendar.bundle.js') }}"></script>
     {{-- <script src="{{ asset('js/es.js') }}"></script> --}}
     <script src="{{ asset('js/fullCalendarLocale/es.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script> --}}
+{{--     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -34,7 +36,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.bundle.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.bundle.css') }}">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
     <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
 
     <script type="text/javascript">
@@ -51,6 +54,9 @@
             $('ul.nav li.nav-item a.dropdown-item').filter(function() {
                  return this.href == url;
             }).parent().parent().children('.dropdown-toggle').addClass('active');
+
+
+            // $('.select2').select2();
         });
     </script>
 
