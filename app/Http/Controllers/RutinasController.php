@@ -37,6 +37,8 @@ class RutinasController extends Controller
         DB::beginTransaction();
         $nombre = $request->nombre;
 
+        $icono = $request->icono_rutina == null ? 'fas fa-dumbbell' : $request->icono_rutina;
+
         $ejerciciosRutina = new \stdClass();
         for ($i=1; $i<8 ; $i++) {
             $param_ejercicios = 'ejercicios_dia'.$i;
@@ -60,7 +62,7 @@ class RutinasController extends Controller
         }
 
         try {
-            Rutina::create([ 'nombre' => $request->nombre, 'ejercicios' => json_encode($ejerciciosRutina) ]);
+            Rutina::create([ 'nombre' => $request->nombre, 'ejercicios' => json_encode($ejerciciosRutina), 'icono' => $icono ]);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
@@ -89,6 +91,7 @@ class RutinasController extends Controller
         DB::beginTransaction();
 
         $nombre = $request->nombre;
+        $icono = $request->icono_rutina == null ? 'fas fa-dumbbell' : $request->icono_rutina;
 
         $ejerciciosRutina = new \stdClass();
         for ($i=1; $i<8 ; $i++) {
@@ -115,7 +118,7 @@ class RutinasController extends Controller
         }
 
         try {
-            Rutina::where('id',$id)->update([ 'nombre'=>$nombre, 'ejercicios' => json_encode($ejerciciosRutina) ]);
+            Rutina::where('id',$id)->update([ 'nombre'=>$nombre, 'ejercicios' => json_encode($ejerciciosRutina), 'icono' => $icono ]);
             $rutina = Rutina::where('id',$id)->firstOrFail();
             $ejercicios = Ejercicio::all();
             DB::commit();
