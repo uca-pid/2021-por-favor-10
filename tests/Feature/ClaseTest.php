@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Evento;
+use App\Models\ClaseUser;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -35,6 +36,10 @@ class ClaseTest extends TestCase
     protected function clasePostRoute()
     {
         return route('cargarClase');
+    }
+    protected function claseUsuarios()
+    {
+        return route('usuariosClases');
     }
     public function testIfUserNotLoggedCantEnterClases()
     {
@@ -89,5 +94,57 @@ class ClaseTest extends TestCase
         ]);
 
         $response->assertStatus(500); //500 Falla
+    }
+    public function testUserCanBeAddedToClaseViewWorks()
+    {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get($this->claseUsuarios());
+        $response->assertSuccessful();
+        $response->assertViewIs('usuariosClases');
+    }
+    public function testUserCanBeAddedToClaseWorksInDb()
+    {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $claseuser = ClaseUser::factory()->create();
+        $response = $this->post('/agregarUsuariosClases', [
+            'clase' => $claseuser->id_clase,
+            'user' => $claseuser->id_users,
+            'cant_inscriptos' => $claseuser->cant_inscriptos,
+        ]);
+
+        $response->assertRedirect('/usuariosClases');//Redirecciona a la ruta especificada post creacion
+    }
+    public function testUserCantBeAddedToClaseWithoutFields()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $claseuser = ClaseUser::factory()->create();
+        $response = $this->post('/agregarUsuariosClases', [
+            //vacio
+        ]);
+        $response->assertStatus(500); //500 Falla
+    }
+    public function testApiSearchClaseWorks()
+    {
+       $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/estadisticasClases/1');
+        $response->assertSuccessful();
+        $response->assertStatus(200);
+    }
+    public function testApiSearchUserWorks()
+    {
+       $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/estadisticasUsers/1');
+        $response->assertSuccessful();
+        $response->assertStatus(200);
     }
 }
