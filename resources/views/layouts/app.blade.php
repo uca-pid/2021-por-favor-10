@@ -38,7 +38,15 @@
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
     <script src="{{ asset('js/moment-with-locales.min.js') }}"></script>
+
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+
+
+    {{-- fontawesome --}}
+    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -252,6 +260,8 @@
     </div>
 </header>
 <body style="overflow-x: hidden; scroll-behavior: smooth;">
+    @include('partials.page_loader')
+    @include('partials.alertMessages')
     <div class="container-fluid overflow-auto">
         {{-- <div id="video-background">
             <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>

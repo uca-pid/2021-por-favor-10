@@ -14,7 +14,7 @@ class CreateGrupoMuscularsTable extends Migration
     public function up()
     {
         Schema::create('grupo_musculars', function (Blueprint $table) {
-            $table->id();
+            $table->id()->unique();
             $table->string('nombre');
         });
     }

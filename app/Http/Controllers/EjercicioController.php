@@ -35,10 +35,21 @@ class EjercicioController extends Controller
     public function crearEjercicio(Request $request)
     {
         DB::beginTransaction();
-
         try {
-            Ejercicio::create([ 'nombre' => $request->nombre, 'grupo_muscular' => $request->grupo_muscular ]);
-            DB::commit();
+            if ($request->nombre != '') {
+                if ($request->nuevo_grupo_muscular!=null) {
+                    $grupo_muscular = GrupoMuscular::create([ 'nombre' => $request->nuevo_grupo_muscular ]);
+                    Ejercicio::create([ 'nombre' => $request->nombre, 'grupo_muscular' => $grupo_muscular->id ]);
+                } else if ($request->grupo_muscular!="Seleccionar") {
+                    Ejercicio::create([ 'nombre' => $request->nombre, 'grupo_muscular' => $request->grupo_muscular ]);
+                } else {
+                    DB::rollBack();
+                    return redirect()->route('ejercicios')->with('warn', 'Debe seleccionar un grupo muscular o crear uno.');
+                }
+                DB::commit();
+            } else {
+                return redirect()->route('ejercicios')->with('warn', 'Debe ingresar un nombre para el ejercicio.');
+            }
         } catch (Exception $e) {
             DB::rollBack();
         }

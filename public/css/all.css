@@ -11969,21 +11969,3 @@ readers do not read off random characters that represent icons */
 .fas {
   font-family: 'Font Awesome 5 Pro';
   font-weight: 900; }
-
-.fab.fa-uca {
-  margin-bottom: 6px;
-  background: url("../webfonts/fa-uca.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 34%;
-  width: 80%;
-}
-
-.fab.fa-uca-dos {
-  margin-bottom: 6px;
-  background: url("../webfonts/fa-uca-dos.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 34%;
-  width: 80%;
-}
