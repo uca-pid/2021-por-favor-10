@@ -2,12 +2,12 @@
 
 @section('content')
 
-<link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
-<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#grupo_muscular').select2();
+        $('#grupo_muscular').select2({
+            theme: 'bootstrap4',
+            dropdownParent: $("#modal")
+        });
     });
 
     function mostrarEjercicios(rutina_id){
@@ -44,6 +44,7 @@
   function atrasNuevoGrupoMuscular(){
     $('.select2').removeAttr('hidden');
     $('#botonNuevoGM').removeAttr('hidden');
+    $('#nuevo_grupo_muscular').val(null);
     $('#nuevo_grupo_muscular').attr('hidden',"true");
     $('#botonAtrasGM').attr('hidden',"true");
   };
