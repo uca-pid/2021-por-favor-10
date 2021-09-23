@@ -22,6 +22,9 @@ Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
+Route::get('/icontest', function () {
+    return view('icontest');
+})->name('icontest');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -37,6 +40,7 @@ Route::post('/generarCambios', [App\Http\Controllers\HomeController::class, 'gen
 Route::get('/usuariosClases', [App\Http\Controllers\HomeController::class, 'usuariosClases'])->name('usuariosClases');
 Route::get('/estadisticasClases', [App\Http\Controllers\HomeController::class, 'estadisticasClases'])->name('estadisticasClases');
 Route::get('/estadisticasClases/{clase}', [App\Http\Controllers\ApiController::class, 'apiFetchCantUsersInClases'])->name('cantUsersClase');
+Route::get('/estadisticasUsers/{user}', [App\Http\Controllers\ApiController::class, 'apiFetchUsersInClases'])->name('usersInClase');
 Route::post('/agregarUsuariosClases', [App\Http\Controllers\HomeController::class, 'agregarUsuariosClases'])->name('agregarUsuariosClases');
 
 Auth::routes(['verify' => true]);
