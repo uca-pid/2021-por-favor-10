@@ -48,16 +48,14 @@
     $('#nuevo_grupo_muscular').attr('hidden',"true");
     $('#botonAtrasGM').attr('hidden',"true");
   };
-
-  // xhr.setRequestHeader('XSRF-TOKEN', @csrf)
 </script>
 
-{{-- <div class="container bg-white" style="overflow: scroll;"> --}}
-    {{-- <div class="row justify-content-center"> --}}
         <div class="card" style="overflow: scroll;">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-auto mr-auto">Ejercicios</div>
+                    <div class="col-auto mr-auto d-flex mb-0 align-items-center">
+                        <h3 class="mb-0">Ejercicios</h3>
+                    </div>
                     <div class="col-auto">
                         <button class="btn btn-primary" data-toggle="modal" data-target="#modal">Crear</button>
                     </div>
@@ -70,29 +68,15 @@
                           id="table"
                           data-toggle="table"
                           data-height="460"
-                          {{-- data-detail-view="true"
-                          data-detail-formatter="detailFormatter" --}}
                           data-ajax-options="ajaxOptions"
                           data-url="{{ route('lista_ejercicios') }}">
                           <thead>
                             <tr>
-                              {{-- <th data-field="id">ID</th> --}}
                               <th data-field="nombre">Nombre ejercicio</th>
                               <th data-field="grupo_muscular">Grupo muscular</th>
                             </tr>
                           </thead>
-                          {{-- <tbody>
-                                @foreach ($ejercicios as $ejercicio)
-                                    <tr>
-                                        <td>{{ $ejercicio->id }}</td>
-                                        <td>{{ $ejercicio->nombre }}</td>
-                                        <td>{{ $ejercicio->grupo_muscular }}</td>
-                                    </tr>
-                                @endforeach
-                          </tbody> --}}
                         </table>
-                    {{-- @else
-                        <div>No hay ejercicios cargados</div> --}}
                     @endif
 
 

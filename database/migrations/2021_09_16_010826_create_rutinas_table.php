@@ -17,6 +17,7 @@ class CreateRutinasTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->json('ejercicios');
+            $table->string('icono');
             $table->timestamps();
         });
     }
