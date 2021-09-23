@@ -13,7 +13,8 @@ class Rutina extends Model
 
     protected $fillable = [
         'nombre',
-        'ejercicios'
+        'ejercicios',
+        'icono'
     ];
 
     // public function ejercicios()

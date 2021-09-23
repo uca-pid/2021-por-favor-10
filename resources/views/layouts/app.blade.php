@@ -9,6 +9,9 @@
 
     <title>{{ config('app.name') }}</title>
 
+    {{-- favicon --}}
+    <link rel="shortcut icon" href="{{ asset('media/logos/hercules blanco.png') }}" />
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- <script src="{{ asset('js/fullcalendar.js') }}"></script> --}}
@@ -44,6 +47,9 @@
     <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
 
+    {{-- fontawesome icons full pack --}}
+    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
     {{-- fontawesome --}}
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
@@ -263,30 +269,6 @@
     @include('partials.page_loader')
     @include('partials.alertMessages')
     <div class="container-fluid overflow-auto">
-        {{-- <div id="video-background">
-            <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
-                <source class="h-100" src="{{ asset('media/videos/background.mp4') }}" type="video/mp4" />
-            </video>
-            <div class="mask" style="
-                background: linear-gradient(
-                  45deg,
-                  rgba(5, 75, 122, 0.2),
-                  rgba(0, 146, 244, 0.7) 100%
-            );
-            z-index: -1;
-            position: absolute;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            background-size: cover;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-            ">
-
-            </div>
-        </div> --}}
         <div style="max-width: 100%; max-height: 100%;">
             @yield('content')
         </div>
