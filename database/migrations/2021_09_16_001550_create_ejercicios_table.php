@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use App\Models\Ejercicio;
+
 class CreateEjerciciosTable extends Migration
 {
     /**
@@ -22,6 +24,23 @@ class CreateEjerciciosTable extends Migration
               ->references('id')
               ->on('grupo_musculars');
         });
+
+        $data =  array(
+            [
+                'nombre' => 'Abdominales',
+                'grupo_muscular' => 1
+            ],
+            [
+                'nombre' => 'Pectorales',
+                'grupo_muscular' => 2
+            ]
+        );
+        foreach ($data as $dato){
+            $ejercicio = new Ejercicio();
+            $ejercicio->nombre = $dato['nombre'];
+            $ejercicio->grupo_muscular = $dato['grupo_muscular'];
+            $ejercicio->save();
+        }
     }
 
     /**

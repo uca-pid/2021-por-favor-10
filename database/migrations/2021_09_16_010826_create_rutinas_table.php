@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Rutina;
 
 class CreateRutinasTable extends Migration
 {
@@ -20,6 +21,24 @@ class CreateRutinasTable extends Migration
             $table->string('icono');
             $table->timestamps();
         });
+
+        $data =  array(
+            [
+                'nombre' => 'Rutina Test',
+                'ejercicios' => ('{"1":[{"ejercicio_id":"2","repeticiones":"15"}],"2":[{"ejercicio_id":"1","repeticiones":"10"}],"3":[],"4":[],"5":[],"6":[],"7":[]}')
+            ],
+            [
+                'nombre' => 'Rutina Ejemplo',
+                'ejercicios' => ('{"1":[{"ejercicio_id":"2","repeticiones":"15"}],"2":[{"ejercicio_id":"1","repeticiones":"10"}],"3":[],"4":[],"5":[],"6":[],"7":[]}')
+            ]
+        );
+        foreach ($data as $dato){
+            $rutina = new Rutina();
+            $rutina->nombre = $dato['nombre'];
+            $rutina->ejercicios = $dato['ejercicios'];
+            $rutina->icono = 'fas fa-dumbbell'; // icono de pesa
+            $rutina->save();
+        }
     }
 
     /**
