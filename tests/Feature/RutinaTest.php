@@ -48,6 +48,7 @@ class RutinaTest extends TestCase
         $response = $this->post('/rutinas', [
             'nombre' => $rutina->nombre,
             'ejercicios' => $rutina->ejercicios,
+            //'icono' => $rutina->icono,
         ]);
 
         $response->assertStatus(201); //201 Creado
