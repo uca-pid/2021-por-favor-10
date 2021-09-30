@@ -17,6 +17,17 @@ class CreateGrupoMuscularsTable extends Migration
             $table->id()->unique();
             $table->string('nombre');
         });
+
+        DB::table('grupo_musculars')->insert(
+            array(
+                [
+                    'nombre' => 'Abdomen'
+                ],
+                [
+                    'nombre' => 'Pecho'
+                ],
+            )
+        );
     }
 
     /**
