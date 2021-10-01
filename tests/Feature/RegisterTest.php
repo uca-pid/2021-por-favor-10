@@ -62,8 +62,8 @@ class RegisterTest extends TestCase
         ]);
 
         $response->assertRedirect($this->successfulRegistrationRoute());
-        $this->assertCount(1, $users = User::all());
-        $this->assertAuthenticatedAs($user = $users->first());
+        $this->assertCount(9, $users = User::all());
+        $this->assertAuthenticatedAs($user = $users->last());
         $this->assertEquals('John Doe', $user->name);
         $this->assertEquals('john@example.com', $user->email);
         $this->assertTrue(Hash::check('i-love-laravel', $user->password));
@@ -83,7 +83,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        $this->assertCount(0, $users);
+        $this->assertCount(8, $users);
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('name');
         $this->assertTrue(session()->hasOldInput('email'));
@@ -102,7 +102,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        $this->assertCount(0, $users);
+        $this->assertCount(8, $users);
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('email');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -121,7 +121,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        $this->assertCount(0, $users);
+        $this->assertCount(8, $users);
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('email');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -141,7 +141,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        $this->assertCount(0, $users);
+        $this->assertCount(8, $users);
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('password');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -161,7 +161,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        $this->assertCount(0, $users);
+        $this->assertCount(8, $users);
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('password');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -181,7 +181,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        $this->assertCount(0, $users);
+        $this->assertCount(8, $users);
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('password');
         $this->assertTrue(session()->hasOldInput('name'));
