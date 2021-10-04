@@ -10,12 +10,12 @@
 
         		<div class="card text-center">
 				  <div class="card-header">
-				    <h3><strong>Agregar Usuario a Clase</strong></h3>
+				    <h3><strong>Agregar Cliente a Rutina</strong></h3>
 				  </div>
 				  <div class="card-body">
 				    <h5 class="card-title"></h5>
 
-				    <form class="form" action="{{ route('agregarUsuariosClases') }}" method="POST" id="kt_form">
+				    <form class="form" action="{{ route('agregarClienteRutina') }}" method="POST" id="kt_form">
 					       @csrf
 						   <div class="row">
 						      <input type="hidden" id="id" name="id" value="">
@@ -23,11 +23,11 @@
 						   <br>
 						   <div class="row">
 						   	  <br>
-						   	  <label><strong>Clase:</strong></label>
-						      <select class="form-control" name="clase" id="clase">
-						 	  	@foreach ($clases as $clase)
+						   	  <label><strong>Rutina:</strong></label>
+						      <select class="form-control" name="rutina" id="rutina">
+						 	  	@foreach ($rutinas as $rutina)
 
-								    <option value="{{$clase->id}}">{{$clase->title}}  {{$clase->start}}-{{$clase->end}}</option>
+								    <option value="{{$rutina->id}}">{{$rutina->nombre}}</option>
 
 					 			@endforeach     										 		
 						      </select>
@@ -35,11 +35,11 @@
 						    <br>
 						    <div class="row">
 						      <br>
-						      <label><strong>Usuario:</strong></label>
-						      <select class="form-control" name="user" id="user">
-						 	  	@foreach ($usuarios as $usuarios)
+						      <label><strong>Cliente:</strong></label>
+						      <select class="form-control" name="cliente" id="cliente">
+						 	  	@foreach ($clientes as $cliente)
 
-								    <option value="{{$usuarios->id}}">{{$usuarios->nombre}} - {{$usuarios->email}}</option>
+								    <option value="{{$cliente->id}}">{{$cliente->nombre}} - {{$cliente->email}}</option>
 
 					 			@endforeach  						 
 						      </select>

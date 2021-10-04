@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Rutina;
 use App\Models\Ejercicio;
-
-
 use App\Models\Evento;
+use App\Models\User;
+use App\Models\ClaseUser;
+use App\Models\Cliente;
+use App\Models\RutinaCliente;
 
 class RutinasController extends Controller
 {
@@ -148,4 +150,35 @@ class RutinasController extends Controller
         // return $datos;
         return view('rutinas.graficos', compact('datos'));
     }
+
+    public function rutinaCliente()
+    {
+        $clientes = Cliente::all();
+        $rutinas = Rutina::all();
+        return view('rutinas.rutinaCliente')->with('rutinas', $rutinas)->with('clientes', $clientes);
+    }
+    public function agregarClienteRutina(Request $request)
+    {
+        $clienterutina = RutinaCliente::where('id_rutina',$request->rutina)->get();
+        if ( count($clienterutina) == 0 )
+        {
+            RutinaCliente::create([ 'id_rutina' => $request->rutina , 'id_clientes' => json_encode([$request->cliente]) , 'cant_inscriptos' => 1]);
+            return redirect()->route('rutinaCliente');
+        }
+        else
+        {
+            $arrayusers = json_decode(($clienterutina[0])->id_clientes);
+            if(in_array($request->cliente ,$arrayusers))
+            {
+                return "El usuario ya esta en la clase";
+            }
+            else
+            {
+                array_push($arrayusers, $request->cliente);
+                RutinaCliente::where('id_rutina',$request->rutina)->update([ 'id_rutina' => $request->rutina , 'id_clientes' => json_encode($arrayusers) , 'cant_inscriptos' => (($clienterutina[0])->cant_inscriptos+1)  ]);
+                return redirect()->route('rutinaCliente');
+            }
+        }
+    }
+
 }

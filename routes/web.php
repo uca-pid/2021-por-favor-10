@@ -63,6 +63,8 @@ Route::get('/rutinas', [App\Http\Controllers\RutinasController::class, 'rutinas'
 Route::post('/rutinas', [App\Http\Controllers\RutinasController::class, 'crearRutina'])->name('rutina_crear');
 Route::get('/rutina/{id}', [App\Http\Controllers\RutinasController::class, 'detalleRutina'])->name('rutina_detalle');
 Route::post('/rutina/{id}', [App\Http\Controllers\RutinasController::class, 'editarRutina'])->name('rutina_editar');
+Route::get('/rutinaCliente', [App\Http\Controllers\RutinasController::class, 'rutinaCliente'])->name('rutinaCliente');
+Route::post('/agregarClienteRutina', [App\Http\Controllers\RutinasController::class, 'agregarClienteRutina'])->name('agregarClienteRutina');
 
 Route::get('/ejercicios', [App\Http\Controllers\EjercicioController::class, 'ejercicios'])->name('ejercicios');
 Route::post('/ejercicios', [App\Http\Controllers\EjercicioController::class, 'crearEjercicio'])->name('ejercicio_crear');

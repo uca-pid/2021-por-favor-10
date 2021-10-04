@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
@@ -12,7 +13,7 @@ use Tests\TestCase;
 
 class ForgotPasswordTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected function passwordRequestRoute()
     {
@@ -51,11 +52,11 @@ class ForgotPasswordTest extends TestCase
     {
         Notification::fake();
         $user = User::factory()->create([
-            'email' => 'john@example.com',
+            'email' => 'johnt@example.com',
         ]);
 
         $response = $this->post($this->passwordEmailPostRoute(), [
-            'email' => 'john@example.com',
+            'email' => 'johnt@example.com',
         ]);
 
         $this->assertNotNull($token = DB::table('password_resets')->first());
