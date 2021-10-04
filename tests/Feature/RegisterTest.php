@@ -78,6 +78,7 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutName()
     {
+        $users = User::all();
         $users_already_registered = count($users);
       
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
@@ -86,8 +87,6 @@ class RegisterTest extends TestCase
             'password' => 'i-love-laravel',
             'password_confirmation' => 'i-love-laravel',
         ]);
-
-        $users = User::all();
 
         $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
@@ -99,6 +98,7 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutEmail()
     {
+        $users = User::all();
         $users_already_registered = count($users);
       
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
@@ -107,8 +107,6 @@ class RegisterTest extends TestCase
             'password' => 'i-love-laravel',
             'password_confirmation' => 'i-love-laravel',
         ]);
-
-        $users = User::all();
 
         $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
@@ -120,6 +118,7 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithInvalidEmail()
     {
+        $users = User::all();
         $users_already_registered = count($users);
       
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
@@ -128,8 +127,6 @@ class RegisterTest extends TestCase
             'password' => 'i-love-laravel',
             'password_confirmation' => 'i-love-laravel',
         ]);
-
-        $users = User::all();
 
         $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
@@ -142,6 +139,7 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutPassword()
     {
+        $users = User::all();
         $users_already_registered = count($users);
       
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
@@ -150,8 +148,6 @@ class RegisterTest extends TestCase
             'password' => '',
             'password_confirmation' => '',
         ]);
-
-        $users = User::all();
 
         $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
@@ -164,6 +160,7 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutPasswordConfirmation()
     {
+        $users = User::all();
         $users_already_registered = count($users);
 
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
@@ -172,8 +169,6 @@ class RegisterTest extends TestCase
             'password' => 'i-love-laravel',
             'password_confirmation' => '',
         ]);
-
-        $users = User::all();
 
         $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
@@ -186,6 +181,7 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithPasswordsNotMatching()
     {
+        $users = User::all();
         $users_already_registered = count($users);
 
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
@@ -194,8 +190,6 @@ class RegisterTest extends TestCase
             'password' => 'i-love-laravel',
             'password_confirmation' => 'i-love-symfony',
         ]);
-
-        $users = User::all();
 
         $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
