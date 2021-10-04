@@ -19,11 +19,6 @@ class RegisterTest extends TestCase
         return route('home');
     }
 
-    protected function successfulRegistrationRoute2()
-    {
-        return route('landing');
-    }
-
     protected function registerGetRoute()
     {
         return route('register');
@@ -59,7 +54,9 @@ class RegisterTest extends TestCase
     public function testUserCanRegister()
     {
         Event::fake();
-
+        $users = User::all();
+        $users_already_registered = count($users);
+      
         $response = $this->post($this->registerPostRoute(), [
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -67,10 +64,10 @@ class RegisterTest extends TestCase
             'password_confirmation' => 'i-love-laravel',
         ]);
 
-        $response->assertRedirect($this->successfulRegistrationRoute2());
-        //$this->assertCount(1, $users = User::all());
-        $users = User::all();
-        /*$this->assertAuthenticatedAs($user = $users->first());
+        $response->assertRedirect($this->successfulRegistrationRoute());
+        $this->assertCount($users_already_registered+1, $users = User::all());
+        $this->assertAuthenticatedAs($user = $users->last());
+      
         $this->assertEquals('John Doe', $user->name);
         $this->assertEquals('john@example.com', $user->email);
         $this->assertTrue(Hash::check('i-love-laravel', $user->password));
@@ -81,6 +78,8 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutName()
     {
+        $users_already_registered = count($users);
+      
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
             'name' => '',
             'email' => 'john@example.com',
@@ -90,7 +89,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        //$this->assertCount(0, $users);
+        $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('name');
         $this->assertTrue(session()->hasOldInput('email'));
@@ -100,6 +99,8 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutEmail()
     {
+        $users_already_registered = count($users);
+      
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
             'name' => 'John Doe',
             'email' => '',
@@ -109,7 +110,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        //$this->assertCount(0, $users);
+        $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('email');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -119,6 +120,8 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithInvalidEmail()
     {
+        $users_already_registered = count($users);
+      
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
             'name' => 'John Doe',
             'email' => 'invalid-email',
@@ -128,7 +131,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        //$this->assertCount(0, $users);
+        $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('email');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -139,6 +142,8 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutPassword()
     {
+        $users_already_registered = count($users);
+      
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -148,7 +153,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        //$this->assertCount(0, $users);
+        $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('password');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -159,6 +164,8 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithoutPasswordConfirmation()
     {
+        $users_already_registered = count($users);
+
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -168,7 +175,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        //$this->assertCount(0, $users);
+        $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('password');
         $this->assertTrue(session()->hasOldInput('name'));
@@ -179,6 +186,8 @@ class RegisterTest extends TestCase
 
     public function testUserCannotRegisterWithPasswordsNotMatching()
     {
+        $users_already_registered = count($users);
+
         $response = $this->from($this->registerGetRoute())->post($this->registerPostRoute(), [
             'name' => 'John Doe',
             'email' => 'john@example.com',
@@ -188,7 +197,7 @@ class RegisterTest extends TestCase
 
         $users = User::all();
 
-        //$this->assertCount(0, $users);
+        $this->assertCount($users_already_registered, $users = User::all());
         $response->assertRedirect($this->registerGetRoute());
         $response->assertSessionHasErrors('password');
         $this->assertTrue(session()->hasOldInput('name'));
