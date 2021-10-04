@@ -647,11 +647,11 @@ chartArea.render();
     <div class="container-fluid">
       <div class="main">
         <div class="row sparkboxes mt-4">
-          <div class="col-md-3">
+          <div class="col-md-6">
             <div class="box box1">
               <div class="details">
                 <h3>1213</h3>
-                <h4>CLICKS</h4>
+                <h4>REGISTRADOS</h4>
               </div>
               <div id="spark1"></div>
             </div>
@@ -660,21 +660,27 @@ chartArea.render();
             <div class="box box2">
               <div class="details">
                 <h3>422</h3>
-                <h4>VIEWS</h4>
+                <h4>CLIENTES EN CLASES</h4>
               </div>
-              <div id="spark2"></div>
+              <div style="min-height: 80px; display: flex; justify-content: flex-end; align-items: center;">
+                <i class="fas fa-users-class fa-3x text-white"></i>
+              </div>
+              {{-- <div id="spark2"></div> --}}
             </div>
           </div>
           <div class="col-md-3">
             <div class="box box3">
               <div class="details">
                 <h3>311</h3>
-                <h4>LEADS</h4>
+                <h4>CLIENTES EN RUTINAS</h4>
               </div>
-              <div id="spark3"></div>
+              <div style="min-height: 80px; display: flex; justify-content: flex-end; align-items: center;">
+                 <i class="fas fa-calendar-check fa-3x text-white"></i>
+              </div>
+              {{-- <div id="spark3"></div> --}}
             </div>
           </div>
-          <div class="col-md-3">
+          {{-- <div class="col-md-3">
             <div class="box box4">
               <div class="details">
                 <h3>22</h3>
@@ -682,10 +688,10 @@ chartArea.render();
               </div>
               <div id="spark4"></div>
             </div>
-          </div>
+          </div> --}}
         </div>
 
-        <div class="row mt-4">
+        {{-- <div class="row mt-4">
           <div class="col-md-5">
             <div class="box shadow mt-4">
               <div id="radialBarBottom"></div>
@@ -709,7 +715,7 @@ chartArea.render();
               <div id="areachart"></div>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
   </div>
