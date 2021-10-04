@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Evento;
 use App\Models\User;
 use App\Models\ClaseUser;
+use App\Models\Cliente;
 
 class HomeController extends Controller
 {
@@ -30,7 +31,7 @@ class HomeController extends Controller
     }
     public function usuariosClases()
     {
-        $usuarios = User::all();
+        $usuarios = Cliente::all();
         $clases = Evento::all();
         return view('usuariosClases')->with('clases', $clases)->with('usuarios', $usuarios);
     }
@@ -115,7 +116,7 @@ class HomeController extends Controller
     }
     public function estadisticasClases(Request $request)
     {
-        $usuarios = User::all();
+        $usuarios = Cliente::all();
         $clases = Evento::all();
         return view('estadisticasClases')->with('clases', $clases)->with('usuarios', $usuarios);
     }
