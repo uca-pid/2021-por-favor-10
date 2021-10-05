@@ -5,26 +5,9 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 {{-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> --}}
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     $( document ).ready(function() {
-        // var options = {
-        //   chart: {
-        //     type: 'line'
-        //   },
-        //   series: [{
-        //     name: 'sales',
-        //     data: [30,40,35,50,49,60,70,91,125]
-        //   },
-        //   {
-        //     name: 'otra',
-        //     data: [120,10,24,3,22,11,15,23,4,90]
-        //   }],
-        //   xaxis: {
-        //     categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-        //   }
-        // }
-        var datos = @json($datos);
-        console.log(datos);
+        var datos = @json($datos_clases_usuarios);
 
         var options = {
             chart: {
@@ -124,12 +107,15 @@
             });
         });
     });
-</script> --}}
+</script>
 
 <script type="text/javascript">
 
 $( document ).ready(function() {
-    window.Apex = {
+  var clientes_por_mes = @json($clientes_registrados_por_mes);
+  console.log(clientes_por_mes);
+
+window.Apex = {
   chart: {
     foreColor: '#ccc',
     toolbar: {
@@ -173,7 +159,7 @@ var spark1 = {
     }
   },
   series: [{
-    data: [25, 66, 41, 59, 25, 44, 12, 36, 9, 21]
+    data: clientes_por_mes
   }],
   stroke: {
     curve: 'smooth'
@@ -194,160 +180,9 @@ var spark1 = {
       show: false
     },
     y: {
-      title: {
-        formatter: function formatter(val) {
-          return '';
-        }
-      }
-    }
-  }
-}
-
-var spark2 = {
-  chart: {
-    id: 'spark2',
-    group: 'sparks',
-    type: 'line',
-    height: 80,
-    sparkline: {
-      enabled: true
-    },
-    dropShadow: {
-      enabled: true,
-      top: 1,
-      left: 1,
-      blur: 2,
-      opacity: 0.2,
-    }
-  },
-  series: [{
-    data: [12, 14, 2, 47, 32, 44, 14, 55, 41, 69]
-  }],
-  stroke: {
-    curve: 'smooth'
-  },
-  grid: {
-    padding: {
-      top: 20,
-      bottom: 10,
-      left: 110
-    }
-  },
-  markers: {
-    size: 0
-  },
-  colors: ['#fff'],
-  tooltip: {
-    x: {
-      show: false
-    },
-    y: {
-      title: {
-        formatter: function formatter(val) {
-          return '';
-        }
-      }
-    }
-  }
-}
-
-var spark3 = {
-  chart: {
-    id: 'spark3',
-    group: 'sparks',
-    type: 'line',
-    height: 80,
-    sparkline: {
-      enabled: true
-    },
-    dropShadow: {
-      enabled: true,
-      top: 1,
-      left: 1,
-      blur: 2,
-      opacity: 0.2,
-    }
-  },
-  series: [{
-    data: [47, 45, 74, 32, 56, 31, 44, 33, 45, 19]
-  }],
-  stroke: {
-    curve: 'smooth'
-  },
-  markers: {
-    size: 0
-  },
-  grid: {
-    padding: {
-      top: 20,
-      bottom: 10,
-      left: 110
-    }
-  },
-  colors: ['#fff'],
-  xaxis: {
-    crosshairs: {
-      width: 1
-    },
-  },
-  tooltip: {
-    x: {
-      show: false
-    },
-    y: {
-      title: {
-        formatter: function formatter(val) {
-          return '';
-        }
-      }
-    }
-  }
-}
-
-var spark4 = {
-  chart: {
-    id: 'spark4',
-    group: 'sparks',
-    type: 'line',
-    height: 80,
-    sparkline: {
-      enabled: true
-    },
-    dropShadow: {
-      enabled: true,
-      top: 1,
-      left: 1,
-      blur: 2,
-      opacity: 0.2,
-    }
-  },
-  series: [{
-    data: [15, 75, 47, 65, 14, 32, 19, 54, 44, 61]
-  }],
-  stroke: {
-    curve: 'smooth'
-  },
-  markers: {
-    size: 0
-  },
-  grid: {
-    padding: {
-      top: 20,
-      bottom: 10,
-      left: 110
-    }
-  },
-  colors: ['#fff'],
-  xaxis: {
-    crosshairs: {
-      width: 1
-    },
-  },
-  tooltip: {
-    x: {
-      show: false
-    },
-    y: {
+      formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+        return value + ' cliente(s)'
+      },
       title: {
         formatter: function formatter(val) {
           return '';
@@ -358,10 +193,6 @@ var spark4 = {
 }
 
 new ApexCharts(document.querySelector("#spark1"), spark1).render();
-new ApexCharts(document.querySelector("#spark2"), spark2).render();
-new ApexCharts(document.querySelector("#spark3"), spark3).render();
-new ApexCharts(document.querySelector("#spark4"), spark4).render();
-
 
 var optionsLine = {
   chart: {
@@ -650,7 +481,7 @@ chartArea.render();
           <div class="col-md-6">
             <div class="box box1">
               <div class="details">
-                <h3>1213</h3>
+                <h3>{{ $total_clientes }}</h3>
                 <h4>REGISTRADOS</h4>
               </div>
               <div id="spark1"></div>
@@ -659,52 +490,43 @@ chartArea.render();
           <div class="col-md-3">
             <div class="box box2">
               <div class="details">
-                <h3>422</h3>
+                <h3>{{ $clientes_en_clases }}</h3>
                 <h4>CLIENTES EN CLASES</h4>
               </div>
               <div style="min-height: 80px; display: flex; justify-content: flex-end; align-items: center;">
                 <i class="fas fa-users-class fa-3x text-white"></i>
               </div>
-              {{-- <div id="spark2"></div> --}}
             </div>
           </div>
           <div class="col-md-3">
             <div class="box box3">
               <div class="details">
-                <h3>311</h3>
+                <h3>{{ $clientes_en_rutinas }}</h3>
                 <h4>CLIENTES EN RUTINAS</h4>
               </div>
               <div style="min-height: 80px; display: flex; justify-content: flex-end; align-items: center;">
                  <i class="fas fa-calendar-check fa-3x text-white"></i>
               </div>
-              {{-- <div id="spark3"></div> --}}
-            </div>
-          </div>
-          {{-- <div class="col-md-3">
-            <div class="box box4">
-              <div class="details">
-                <h3>22</h3>
-                <h4>SALES</h4>
-              </div>
-              <div id="spark4"></div>
-            </div>
-          </div> --}}
-        </div>
-
-        {{-- <div class="row mt-4">
-          <div class="col-md-5">
-            <div class="box shadow mt-4">
-              <div id="radialBarBottom"></div>
-            </div>
-          </div>
-          <div class="col-md-7">
-            <div class="box shadow mt-4">
-              <div id="line-adwords" class=""></div>
             </div>
           </div>
         </div>
 
         <div class="row mt-4">
+          <div class="col-md-5">
+            <div class="box shadow mt-4">
+              <button id="resetGrafico" class="btn btn-primary">Restablecer</button>
+              {{-- <div id="radialBarBottom"></div> --}}
+              <div id="chart" class="text-white rounded shadow">
+            </div>
+          </div>
+          {{-- <div class="col-md-7">
+            <div class="box shadow mt-4">
+              <div id="line-adwords" class=""></div>
+            </div>
+          </div> --}}
+        </div>
+
+        {{-- <div class="row mt-4">
           <div class="col-md-5">
             <div class="box shadow mt-4">
               <div id="barchart"></div>

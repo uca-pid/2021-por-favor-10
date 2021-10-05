@@ -135,22 +135,6 @@ class RutinasController extends Controller
         return view('rutinas.detalleRutina', compact('rutina','ejercicios'));
     }
 
-    public function grafico()
-    {
-        $clases = Evento::all();
-        $clases_usuarios = DB::table('public.clase_users')->select('id_clase','id_users')->get();
-
-        $datos = ['clases_ids' => [], 'clases_nombre' => [], 'alumnos' => []];
-        foreach ($clases_usuarios as $clase) {
-            $clase_nombre = ($clases->find($clase->id_clase))->title;
-            array_push($datos['clases_ids'],$clase->id_clase);
-            array_push($datos['clases_nombre'],$clase_nombre);
-            array_push($datos['alumnos'],count(json_decode($clase->id_users)));
-        };
-        // return $datos;
-        return view('rutinas.graficos', compact('datos'));
-    }
-
     public function rutinaCliente()
     {
         $clientes = Cliente::all();

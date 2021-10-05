@@ -27,7 +27,7 @@ Route::get('/icontest', function () {
 })->name('icontest');
 
 
-Route::get('/grafico', [App\Http\Controllers\RutinasController::class, 'grafico'])->name('grafico');
+// Route::get('/grafico', [App\Http\Controllers\RutinasController::class, 'grafico'])->name('grafico');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
