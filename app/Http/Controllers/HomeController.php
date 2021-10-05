@@ -37,7 +37,7 @@ class HomeController extends Controller
         $clientes_en_alguna_clase = array();
         $clientes_en_alguna_rutina = array();
 
-        // clases clientes
+        // distribución clases clientes
         $clases_usuarios = DB::table('public.clase_users')->select('id_clase','id_users')->get();
 
         $datos_clases_usuarios = ['clases_ids' => [], 'clases_nombre' => [], 'alumnos' => []];
@@ -52,6 +52,17 @@ class HomeController extends Controller
                 in_array($cliente, $clientes_en_alguna_clase) ? null : array_push($clientes_en_alguna_clase, $cliente);
             }
         };
+
+        // distribución rutinas clientes
+        // $distribucion_rutinas_clientes = DB::table('public.clase_users')->select('id_clase','id_users')->get();
+
+        // $datos_rutinas_clientes = ['rutinas_ids' => [], 'rutinas_nombre' => [], 'alumnos' => []];
+        // foreach ($distribucion_rutinas_clientes as $rutina) {
+        //     $rutina_nombre = ($rutinas->find($rutina->id_rutina))->nombre;
+        //     array_push($datos_rutinas_clientes['rutinas_ids'],$rutina->id_rutina);
+        //     array_push($datos_rutinas_clientes['rutinas_nombre'],$rutina_nombre);
+        //     array_push($datos_rutinas_clientes['alumnos'],count(json_decode($rutina->id_clientes)));
+        // };
 
         // rutinas clientes
         $rutinas_clientes = DB::table('public.rutina_clientes')->select('id_rutina','id_clientes')->get();
@@ -94,7 +105,7 @@ class HomeController extends Controller
         $clientes_en_clases = count($clientes_en_alguna_clase);
         $clientes_en_rutinas = count($clientes_en_alguna_rutina);
         $total_clientes = count($clientes);
-        return view('graficos', compact('datos_clases_usuarios', 'clientes_en_clases', 'clientes_en_rutinas', 'total_clientes', 'clientes_registrados_por_mes'));
+        return view('graficos', compact('datos_clases_usuarios', 'datos_rutinas_usuarios','clientes_en_clases', 'clientes_en_rutinas', 'total_clientes', 'clientes_registrados_por_mes'));
     }
 
     public function usuariosClases()
