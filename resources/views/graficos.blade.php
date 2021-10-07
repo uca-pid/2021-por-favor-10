@@ -396,6 +396,7 @@ chartCircle4.render();
 <div id="wrapper" class="wrapper">
   <div class="content-area rounded">
     <div class="container-fluid">
+      <h3 class="text-white">Dashboard</h3>
       <div class="main">
         <div class="row sparkboxes mt-4">
           <div class="col-md-6">
