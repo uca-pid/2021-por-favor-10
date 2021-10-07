@@ -23,10 +23,21 @@
     };
 
     function editarRutina(rutina_id){
-        console.log('Hola');
         $('#rutina_seleccionada').val(rutina_id);
         $('#modal-edit').modal('show');
+    };
 
+    function diaDescanso(dia){
+        var isHidden = $('#'+dia).is(":hidden");
+        if (isHidden) {
+            $('#'+dia).show();
+            $('#descanso'+dia).removeClass("btn-primary");
+            $('#descanso'+dia).addClass("btn-secondary");
+        } else {
+            $('#'+dia).hide();
+            $('#descanso'+dia).removeClass("btn-secondary");
+            $('#descanso'+dia).addClass("btn-primary");
+        }
     };
 </script>
 
@@ -204,6 +215,8 @@
                                 <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia1')"><i class="fas fa-plus"></i> Añadir</button>
                               </div>
                             </div>
+                            <br />
+                            <button class="btn btn-secondary mb-4" type="button" id="descansodia1" onclick="diaDescanso('dia1')"><i class="fas fa-moon"></i> Día de descanso</button>
 
                             <br />
                             <label>Dia 2:</label>
@@ -222,6 +235,8 @@
                                 <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia2')"><i class="fas fa-plus"></i> Añadir</button>
                               </div>
                             </div>
+                            <br />
+                            <button class="btn btn-secondary mb-4" type="button" id="descansodia2" onclick="diaDescanso('dia2')"><i class="fas fa-moon"></i> Día de descanso</button>
 
                             <br />
                             <label>Dia 3:</label>
@@ -240,6 +255,8 @@
                                 <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia3')"><i class="fas fa-plus"></i> Añadir</button>
                               </div>
                             </div>
+                            <br />
+                            <button class="btn btn-secondary mb-4" type="button" id="descansodia3" onclick="diaDescanso('dia3')"><i class="fas fa-moon"></i> Día de descanso</button>
 
                             <br />
                             <label>Dia 4:</label>
@@ -258,6 +275,8 @@
                                 <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia4')"><i class="fas fa-plus"></i> Añadir</button>
                               </div>
                             </div>
+                            <br />
+                            <button class="btn btn-secondary mb-4" type="button" id="descansodia4" onclick="diaDescanso('dia4')"><i class="fas fa-moon"></i> Día de descanso</button>
 
                             <br />
                             <label>Dia 5:</label>
@@ -276,6 +295,8 @@
                                 <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia5')"><i class="fas fa-plus"></i> Añadir</button>
                               </div>
                             </div>
+                            <br />
+                            <button class="btn btn-secondary mb-4" type="button" id="descansodia5" onclick="diaDescanso('dia5')"><i class="fas fa-moon"></i> Día de descanso</button>
 
                             <br />
                             <label>Dia 6:</label>
@@ -294,6 +315,8 @@
                                 <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia6')"><i class="fas fa-plus"></i> Añadir</button>
                               </div>
                             </div>
+                            <br />
+                            <button class="btn btn-secondary mb-4" type="button" id="descansodia6" onclick="diaDescanso('dia6')"><i class="fas fa-moon"></i> Día de descanso</button>
 
                             <br />
                             <label>Dia 7:</label>
@@ -312,6 +335,8 @@
                                 <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia7')"><i class="fas fa-plus"></i> Añadir</button>
                               </div>
                             </div>
+                            <br />
+                            <button class="btn btn-secondary mb-4" type="button" id="descansodia7" onclick="diaDescanso('dia7')"><i class="fas fa-moon"></i> Día de descanso</button>
 
                         </div>
 
