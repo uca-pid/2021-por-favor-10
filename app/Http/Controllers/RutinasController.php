@@ -163,20 +163,20 @@ class RutinasController extends Controller
         if ( count($clienterutina) == 0 )
         {
             RutinaCliente::create([ 'id_rutina' => $request->rutina , 'id_clientes' => json_encode([$request->cliente]) , 'cant_inscriptos' => 1]);
-            return redirect()->route('rutinaCliente');
+            return redirect()->route('rutinaCliente')->with('success','El cliente se agrego correctamente!');
         }
         else
         {
             $arrayusers = json_decode(($clienterutina[0])->id_clientes);
             if(in_array($request->cliente ,$arrayusers))
             {
-                return "El usuario ya esta en la clase";
+                return redirect()->route('rutinaCliente')->with('failed','El cliente ya esta en la rutina!');
             }
             else
             {
                 array_push($arrayusers, $request->cliente);
                 RutinaCliente::where('id_rutina',$request->rutina)->update([ 'id_rutina' => $request->rutina , 'id_clientes' => json_encode($arrayusers) , 'cant_inscriptos' => (($clienterutina[0])->cant_inscriptos+1)  ]);
-                return redirect()->route('rutinaCliente');
+                return redirect()->route('rutinaCliente')->with('success','El cliente se agrego correctamente!');
             }
         }
     }

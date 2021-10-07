@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Evento;
 use App\Models\ClaseUser;
+use App\Models\RutinaCliente;
 use App\Models\Rutina;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,6 +25,10 @@ class RutinaTest extends TestCase
     {
         return route('rutinas');
     }
+    protected function rutinaClienteRoute()
+    {
+        return route('rutinaCliente');
+    }
     public function testIfUserNotLoggedCantEnterRutinas()
     {
         $response = $this->get($this->rutinaRoute());
@@ -40,17 +45,37 @@ class RutinaTest extends TestCase
         $response->assertSuccessful();
         $response->assertViewIs('rutinas.listRutinas');
     }
-/*    public function testRutinaCanBeAddedToDb()
+    public function testClienteCanBeAddedToRutinaViewWorks()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $rutina = Rutina::factory()->create();
-        $response = $this->post('/rutinas', [
-            'nombre' => $rutina->nombre,
-            'ejercicios' => $rutina->ejercicios,
-            //'icono' => $rutina->icono,
+
+        $response = $this->get($this->rutinaClienteRoute());
+        $response->assertSuccessful();
+        $response->assertViewIs('rutinas.rutinaCliente');
+    }
+    public function testClienteCanBeAddedToRutinaWorksInDb()
+    {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $rutinacliente = RutinaCliente::factory()->create();
+        $response = $this->post('/agregarClienteRutina', [
+            'rutina' => $rutinacliente->id_rutina,
+            'cliente' => $rutinacliente->id_clientes,
+            'cant_inscriptos' => $rutinacliente->cant_inscriptos,
         ]);
 
-        $response->assertStatus(201); //201 Creado
-    }*/
+        $response->assertRedirect('/rutinaCliente');//Redirecciona a la ruta especificada post creacion
+    }
+    public function testClienteCantBeAddedToRutinaWithoutFields()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $rutinacliente = RutinaCliente::factory()->create();
+        $response = $this->post('/agregarClienteRutina', [
+            //vacio
+        ]);
+        $response->assertStatus(500); //500 Falla
+    }
 }
