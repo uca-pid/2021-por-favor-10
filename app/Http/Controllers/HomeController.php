@@ -7,6 +7,9 @@ use App\Models\Evento;
 use App\Models\User;
 use App\Models\ClaseUser;
 use App\Models\Cliente;
+use App\Models\Rutina;
+
+use DB;
 
 class HomeController extends Controller
 {
@@ -27,8 +30,84 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $clases = Evento::all();
+        $rutinas = Rutina::all();
+        $clientes = Cliente::all();
+
+        $clientes_en_alguna_clase = array();
+        $clientes_en_alguna_rutina = array();
+
+        // distribución clases clientes
+        $clases_usuarios = DB::table('public.clase_users')->select('id_clase','id_users')->get();
+
+        $datos_clases_usuarios = ['clases_ids' => [], 'clases_nombre' => [], 'alumnos' => []];
+        foreach ($clases_usuarios as $clase) {
+            $clase_nombre = ($clases->find($clase->id_clase))->title;
+            array_push($datos_clases_usuarios['clases_ids'],$clase->id_clase);
+            array_push($datos_clases_usuarios['clases_nombre'],$clase_nombre);
+            array_push($datos_clases_usuarios['alumnos'],count(json_decode($clase->id_users)));
+
+            $clientes_clase = json_decode($clase->id_users);
+            foreach ($clientes_clase as $cliente) {
+                in_array($cliente, $clientes_en_alguna_clase) ? null : array_push($clientes_en_alguna_clase, $cliente);
+            }
+        };
+
+        // distribución rutinas clientes
+        // $distribucion_rutinas_clientes = DB::table('public.clase_users')->select('id_clase','id_users')->get();
+
+        // $datos_rutinas_clientes = ['rutinas_ids' => [], 'rutinas_nombre' => [], 'alumnos' => []];
+        // foreach ($distribucion_rutinas_clientes as $rutina) {
+        //     $rutina_nombre = ($rutinas->find($rutina->id_rutina))->nombre;
+        //     array_push($datos_rutinas_clientes['rutinas_ids'],$rutina->id_rutina);
+        //     array_push($datos_rutinas_clientes['rutinas_nombre'],$rutina_nombre);
+        //     array_push($datos_rutinas_clientes['alumnos'],count(json_decode($rutina->id_clientes)));
+        // };
+
+        // rutinas clientes
+        $rutinas_clientes = DB::table('public.rutina_clientes')->select('id_rutina','id_clientes')->get();
+
+        $datos_rutinas_usuarios = ['rutinas_ids' => [], 'rutinas_nombre' => [], 'alumnos' => []];
+        foreach ($rutinas_clientes as $rutina) {
+            $rutina_nombre = ($rutinas->find($rutina->id_rutina))->nombre;
+            array_push($datos_rutinas_usuarios['rutinas_ids'],$rutina->id_rutina);
+            array_push($datos_rutinas_usuarios['rutinas_nombre'],$rutina_nombre);
+            array_push($datos_rutinas_usuarios['alumnos'],count(json_decode($rutina->id_clientes)));
+
+            $clientes_rutina = json_decode($rutina->id_clientes);
+            foreach ($clientes_rutina as $cliente) {
+                in_array($cliente, $clientes_en_alguna_rutina) ? null : array_push($clientes_en_alguna_rutina, $cliente);
+            }
+        };
+
+        // clientes registrados
+        $mañana        = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"));
+        $hace_6_meses  = mktime(0, 0, 0, date("m")-6, date("d"),   date("Y"));
+        $año_siguiente = mktime(0, 0, 0, date("m"),   date("d"),   date("Y")+1);
+
+        $clientes_registrados_por_mes = [0,0,0,0,0,0];
+        $clientes_registrados_mes_nombres = [[],[],[],[],[],[]];
+        foreach ($clientes as $cliente) {
+            $fecha_trimmed = explode(" ",$cliente->created_at)[0];
+            for ($i=0; $i <= 5; $i++) {
+                $mesInf  = date('Y-m-d', mktime(0, 0, 0, date("m")-$i, 0,   date("Y")));
+                $mesSup  = date('Y-m-d', mktime(0, 0, 0, date("m")-$i, 31,   date("Y")));
+                if ($fecha_trimmed>$mesInf && $fecha_trimmed<$mesSup) {
+                    $clientes_del_mes = $clientes_registrados_por_mes[$i];
+                    $clientes_registrados_por_mes[$i] = $clientes_del_mes+1;
+
+                    $clientes_registrados_mes_nombres[$i] = array($clientes_registrados_mes_nombres[$i],$cliente->nombre);
+                }
+            }
+        }
+        $clientes_registrados_por_mes = array_reverse($clientes_registrados_por_mes);
+
+        $clientes_en_clases = count($clientes_en_alguna_clase);
+        $clientes_en_rutinas = count($clientes_en_alguna_rutina);
+        $total_clientes = count($clientes);
+        return view('graficos', compact('datos_clases_usuarios', 'datos_rutinas_usuarios','clientes_en_clases', 'clientes_en_rutinas', 'total_clientes', 'clientes_registrados_por_mes'));
     }
+
     public function usuariosClases()
     {
         $usuarios = Cliente::all();

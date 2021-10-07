@@ -54,6 +54,8 @@
     {{-- fontawesome --}}
     <link href="{{ asset('css/all.css') }}" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             var url = window.location;
