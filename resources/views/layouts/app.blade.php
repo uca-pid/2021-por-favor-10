@@ -117,32 +117,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav nav-success nav-pills mr-auto">
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" id="profile-tab-1" href="{{ route('clases') }}" aria-controls="profile">
+                    <li class="nav-item">
+                        <a class="nav-link" id="modify" href="{{ route('home') }}" aria-controls="modify">
                             <span class="nav-icon">
-                                <i class="fas fa-home"></i>
+                                <i class="fas fa-chart-pie"></i>
                             </span>
-                            <span class="nav-text">Clases</span>
+                            <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="modify" href="{{ route('usuariosClases') }}" aria-controls="modify">
-                            <span class="nav-icon">
-                                <i class="fas fa-edit"></i>
-                            </span>
-                            <span class="nav-text">UAC</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="modify" href="{{ route('modificar') }}" aria-controls="modify">
-                            <span class="nav-icon">
-                                <i class="fas fa-edit"></i>
-                            </span>
-                            <span class="nav-text">Modificar</span>
-                        </a>
-                    </li> --}}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -153,42 +135,50 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="{{ route('clases') }}">
-                                <span class="nav-icon">
+                                <span class="nav-icon mr-2">
                                     <i class="far fa-calendar-alt"></i>
                                 </span>
                                 <span class="nav-text">Calendario</span>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('modificar') }}">
-                                <span class="nav-icon">
+                                <span class="nav-icon mr-2">
                                     <i class="far fa-edit"></i>
                                 </span>
                                 <span class="nav-text">Modificar</span>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('usuariosClases') }}">
-                                <span class="nav-icon">
-                                    <i class="fas fa-edit"></i>
+                                <span class="nav-icon mr-2">
+                                    <i class="fas fa-user-check"></i>
                                 </span>
-                                <span class="nav-text">UAC</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('estadisticasClases') }}">
-                                <span class="nav-icon">
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                                <span class="nav-text">Estadísticas</span>
+                                <span class="nav-text">Asignar clientes</span>
                             </a>
                         </div>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" id="modify" href="{{ route('rutinas') }}" aria-controls="modify">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="nav-icon">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-fist-raised"></i>
                             </span>
                             <span class="nav-text">Rutinas</span>
                         </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ route('rutinas') }}">
+                                <span class="nav-icon mr-2">
+                                    <i class="fas fa-list"></i>
+                                </span>
+                                <span class="nav-text">Listado</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('rutinaCliente') }}">
+                                <span class="nav-icon mr-2">
+                                    <i class="fas fa-user-check"></i>
+                                </span>
+                                <span class="nav-text">Asignar cliente</span>
+                            </a>
+                        </div>
                     </li>
 
                     <li class="nav-item">
@@ -197,6 +187,15 @@
                                 <i class="fas fa-dumbbell"></i>
                             </span>
                             <span class="nav-text">Ejercicios</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="modify" href="{{ route('estadisticasClases') }}" aria-controls="modify">
+                            <span class="nav-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </span>
+                            <span class="nav-text">Estadísticas</span>
                         </a>
                     </li>
                 </ul>

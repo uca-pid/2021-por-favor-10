@@ -16,6 +16,11 @@
       font-weight: 600;
     }
 
+    #distribucion_clases div.apexcharts-canvas .apexcharts-svg,
+    #distribucion_rutinas div.apexcharts-canvas .apexcharts-svg {
+      background: #313131 !important;
+    }
+
     /*div .wrapper {
       background: linear-gradient(45deg,#3a3a60,#5f5f8e);
       min-height: 100vh;
@@ -197,7 +202,7 @@
                   console.log(chartContext);
                   console.log(config.dataPointIndex);
                   var seleccion = config.dataPointIndex;
-                  eliminarClase(seleccion, chartContext.w.globals.series, chartContext.w.globals.labels);
+                  eliminarRutina(seleccion, chartContext.w.globals.series, chartContext.w.globals.labels);
                 }
               }
           },
@@ -263,7 +268,7 @@
         var chart_distribucion_rutinas = new ApexCharts(document.querySelector("#distribucion_rutinas"), optionsDistribucionRutinas);
         chart_distribucion_rutinas.render();
 
-        function eliminarClase(seleccion, serie, labels) {
+        function eliminarRutina(seleccion, serie, labels) {
             let nuevaSerie = serie;
             let nuevoLabels = labels;
             nuevaSerie.splice(seleccion, 1);
@@ -345,54 +350,6 @@
             });
 </script>
 
-<script type="text/javascript">
-
-$( document ).ready(function() {
-
-var optionsCircle4 = {
-  chart: {
-    type: 'radialBar',
-    height: 350,
-    width: 380,
-  },
-  plotOptions: {
-    radialBar: {
-      size: undefined,
-      inverseOrder: true,
-      hollow: {
-        margin: 5,
-        size: '48%',
-        background: 'transparent',
-
-      },
-      track: {
-        show: false,
-      },
-      startAngle: -180,
-      endAngle: 180
-
-    },
-  },
-  stroke: {
-    lineCap: 'round'
-  },
-  series: [71, 63, 77],
-  labels: ['June', 'May', 'April'],
-  legend: {
-    show: true,
-    floating: true,
-    position: 'right',
-    offsetX: 70,
-    offsetY: 240
-  },
-}
-
-var chartCircle4 = new ApexCharts(document.querySelector('#radialBarBottom'), optionsCircle4);
-chartCircle4.render();
-
-});
-</script>
-
 <div id="wrapper" class="wrapper">
   <div class="content-area rounded">
     <div class="container-fluid">
@@ -435,30 +392,21 @@ chartCircle4.render();
         <div class="row mt-4">
           <div class="col-md-6">
             <div class="box shadow mt-4 justify-content-center">
-              <button id="resetGraficoClases" class="btn btn-primary">Restablecer</button>
               <div id="distribucion_clases" class="rounded shadow"></div>
+              <div class="d-flex justify-content-center mt-4">
+                <button id="resetGraficoClases" class="btn btn-primary">Restablecer</button>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="box shadow mt-4 justify-content-center">
-              <button id="resetGraficoRutinas" class="btn btn-primary">Restablecer</button>
               <div id="distribucion_rutinas" class="rounded shadow"></div>
+              <div class="d-flex justify-content-center mt-4">
+                <button id="resetGraficoRutinas" class="btn btn-primary">Restablecer</button>
+              </div>
             </div>
           </div>
         </div>
-
-        {{-- <div class="row mt-4">
-          <div class="col-md-5">
-            <div class="box shadow mt-4">
-              <div id="barchart"></div>
-            </div>
-          </div>
-          <div class="col-md-7">
-            <div class="box shadow mt-4">
-              <div id="areachart"></div>
-            </div>
-          </div>
-        </div> --}}
       </div>
     </div>
   </div>
