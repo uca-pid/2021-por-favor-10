@@ -120,20 +120,20 @@ class HomeController extends Controller
         if ( count($claseuser) == 0 )
         {
             ClaseUser::create([ 'id_clase' => $request->clase , 'id_users' => json_encode([$request->user]) , 'cant_inscriptos' => 1]);
-            return redirect()->route('usuariosClases');
+            return redirect()->route('usuariosClases')->with('success','El cliente se agrego correctamente!');
         }
         else
         {
             $arrayusers = json_decode(($claseuser[0])->id_users);
             if(in_array($request->user ,$arrayusers))
             {
-                return "El usuario ya esta en la clase";
+                return redirect()->route('usuariosClases')->with('failed','El cliente ya esta en la clase!');
             }
             else
             {
                 array_push($arrayusers, $request->user);
                 ClaseUser::where('id_clase',$request->clase)->update([ 'id_clase' => $request->clase , 'id_users' => json_encode($arrayusers) , 'cant_inscriptos' => (($claseuser[0])->cant_inscriptos+1)  ]);
-                return redirect()->route('usuariosClases');
+                return redirect()->route('usuariosClases')->with('success','El cliente se agrego correctamente!');
             }
         }
     }
