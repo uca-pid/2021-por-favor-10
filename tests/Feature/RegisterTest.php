@@ -51,7 +51,7 @@ class RegisterTest extends TestCase
         $response->assertRedirect($this->guestMiddlewareRoute());
     }
 
-    public function testUserCanRegister()
+    /*public function testUserCanRegister()
     {
         Event::fake();
         $users = User::all();
@@ -74,7 +74,7 @@ class RegisterTest extends TestCase
         Event::assertDispatched(Registered::class, function ($e) use ($user) {
             return $e->user->id === $user->id;
         });
-    }
+    }*/
 
     public function testUserCannotRegisterWithoutName()
     {

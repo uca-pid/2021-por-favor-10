@@ -69,6 +69,16 @@ Route::post('/agregarClienteRutina', [App\Http\Controllers\RutinasController::cl
 Route::get('/ejercicios', [App\Http\Controllers\EjercicioController::class, 'ejercicios'])->name('ejercicios');
 Route::post('/ejercicios', [App\Http\Controllers\EjercicioController::class, 'crearEjercicio'])->name('ejercicio_crear');
 
+Route::get('/recursoclases', [App\Http\Controllers\RecursoController::class, 'recursoclases'])->name('recursoclases');
+Route::post('/crearRecursoClase', [App\Http\Controllers\RecursoController::class, 'crearRecursoClase'])->name('crearRecursoClase');
+Route::post('/agregarClaseRecurso', [App\Http\Controllers\RecursoController::class, 'agregarClaseRecurso'])->name('agregarClaseRecurso');
+
+Route::get('/recursoejercicios', [App\Http\Controllers\RecursoController::class, 'recursoejercicios'])->name('recursoejercicios');
+Route::post('/crearRecursoEjercicio', [App\Http\Controllers\RecursoController::class, 'crearRecursoEjercicio'])->name('crearRecursoEjercicio');
+Route::post('/agregarEjercicioRecurso', [App\Http\Controllers\RecursoController::class, 'agregarEjercicioRecurso'])->name('agregarEjercicioRecurso');
+
+Route::get('/estadisticasrecursos', [App\Http\Controllers\RecursoController::class, 'estadisticasrecursos'])->name('estadisticasrecursos');
+
 Route::get('/coverage', function () {
     return redirect('coverage/index.html');
 });

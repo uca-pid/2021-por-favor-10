@@ -181,6 +181,37 @@
                         </div>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="nav-icon">
+                                <i class="fas fa-cash-register"></i>
+                            </span>
+                            <span class="nav-text">Recursos</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ route('estadisticasrecursos') }}">
+                                <span class="nav-icon mr-2">
+                                    <i class="fas fa-chart-bar"></i>
+                                </span>
+                                <span class="nav-text">Estadísticas</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('recursoclases') }}">
+                                <span class="nav-icon mr-2">
+                                    <i class="fas fa-school"></i>
+                                </span>
+                                <span class="nav-text">Clases</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('recursoejercicios') }}">
+                                <span class="nav-icon mr-2">
+                                    <i class="fas fa-dumbbell"></i>
+                                </span>
+                                <span class="nav-text">Ejercicios</span>
+                            </a>
+                        </div>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" id="modify" href="{{ route('ejercicios') }}" aria-controls="modify">
                             <span class="nav-icon">
