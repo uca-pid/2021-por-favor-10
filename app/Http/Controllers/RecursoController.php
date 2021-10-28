@@ -142,4 +142,20 @@ class RecursoController extends Controller
         $recursoclases = RecursoEjercicio::all();
         return view('recursos.estadisticasrecursos')->with('recursoejercicios', $recursoejercicios)->with('recursoclases', $recursoclases);
     }
+    public function borrarRecursos(Request $request)
+    {
+        if( $request->tipo == 'clase')
+        {
+            RecursoClase::where('id',$request->id)->delete();
+            return redirect()->route('recursoclases')->with('success','Se ha borrado el recurso!');
+        }
+        elseif ($request->tipo == 'ejercicio') {
+            RecursoEjercicio::where('id',$request->id)->delete();
+            return redirect()->route('recursoejercicios')->with('success','Se ha borrado el recurso!');
+        }
+        else
+        {
+            return redirect()->route('home')->with('failed','No se ha podido borrar el recurso!');
+        }
+    }
 }
