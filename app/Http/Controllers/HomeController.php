@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\ClaseUser;
 use App\Models\Cliente;
 use App\Models\Rutina;
+use App\Models\RecursoClase;
+use App\Models\RecursoEjercicio;
 
 use DB;
 
@@ -105,7 +107,13 @@ class HomeController extends Controller
         $clientes_en_clases = count($clientes_en_alguna_clase);
         $clientes_en_rutinas = count($clientes_en_alguna_rutina);
         $total_clientes = count($clientes);
-        return view('graficos', compact('datos_clases_usuarios', 'datos_rutinas_usuarios','clientes_en_clases', 'clientes_en_rutinas', 'total_clientes', 'clientes_registrados_por_mes'));
+
+
+        // recursos
+        $recursoejercicios = RecursoClase::all();
+        $recursoclases = RecursoEjercicio::all();
+
+        return view('graficos', compact('datos_clases_usuarios', 'datos_rutinas_usuarios','clientes_en_clases', 'clientes_en_rutinas', 'total_clientes', 'clientes_registrados_por_mes', 'recursoejercicios', 'recursoclases'));
     }
 
     public function usuariosClases()

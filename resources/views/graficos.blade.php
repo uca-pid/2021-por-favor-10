@@ -347,7 +347,161 @@
         }
 
         new ApexCharts(document.querySelector("#spark1"), spark1).render();
-            });
+
+        // recursos
+        var recursoejercicios = @json($recursoejercicios);
+        console.log(recursoejercicios);
+        var recursoclases = @json($recursoclases);
+        console.log(recursoclases);
+
+        arrayData = [];
+
+        function cargarObjetosEnData(item) {
+          arrayData.push( {x: item.nombre , y: item.real , goals: [{
+                    name: 'Esperado',
+                    value: item.objetivo,
+                    strokeWidth: 5,
+                    strokeColor: '#775DD0'
+              }] } );
+        }
+
+        recursoejercicios.forEach(cargarObjetosEnData);
+        recursoclases.forEach(cargarObjetosEnData);
+
+        console.log(arrayData);
+        var optionsRecursos = {
+          series: [
+          {
+            name: 'Actual',
+            data: arrayData
+          }
+        ],
+          chart: {
+          height: 350,
+          type: 'bar',
+          background: '#2b2d3e',
+          defaultLocale: 'es',
+          locales: [{
+            "name": "es",
+            "options": {
+              "months": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+              ],
+              "shortMonths": [
+                "Ene",
+                "Feb",
+                "Mar",
+                "Abr",
+                "May",
+                "Jun",
+                "Jul",
+                "Ago",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dic"
+              ],
+              "days": [
+                "Domingo",
+                "Lunes",
+                "Martes",
+                "Miércoles",
+                "Jueves",
+                "Viernes",
+                "Sábado"
+              ],
+              "shortDays": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+              "toolbar": {
+                "exportToSVG": "Descargar SVG",
+                "exportToPNG": "Descargar PNG",
+                "exportToCSV": "Descargar CSV",
+                "menu": "Menu",
+                "selection": "Seleccionar",
+                "selectionZoom": "Seleccionar Zoom",
+                "zoomIn": "Aumentar",
+                "zoomOut": "Disminuir",
+                "pan": "Navegación",
+                "reset": "Reiniciar Zoom"
+              }
+            }
+          }]
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+          }
+        },
+        colors: ['#00E396'],
+        dataLabels: {
+          formatter: function(val, opt) {
+            const goals =
+              opt.w.config.series[opt.seriesIndex].data[opt.dataPointIndex]
+                .goals
+
+            if (goals && goals.length) {
+              return `${val} / ${goals[0].value}`
+            }
+            return val
+          }
+        },
+        legend: {
+          show: true,
+          showForSingleSeries: true,
+          customLegendItems: ['Actual', 'Esperado'],
+          fontSize: '15px',
+          labels: {
+            colors: 'white'
+          },
+          markers: {
+            fillColors: ['#00E396', '#775DD0']
+          }
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: 'white',
+              fontSize: '15px',
+            }
+          }
+        },
+        xaxis: {
+          labels: {
+            style: {
+              colors: 'white',
+              fontSize: '15px',
+            }
+          }
+        },
+        title: {
+            text: 'Estadísticas de los recursos',
+            align: 'center',
+            margin: 10,
+            offsetX: 0,
+            offsetY: 0,
+            floating: false,
+            style: {
+              fontSize:  '25px',
+              fontWeight:  'bold',
+              fontFamily:  undefined,
+              color:  'white'
+            },
+        }
+      };
+
+        var chart_recursos = new ApexCharts(document.querySelector("#recursos"), optionsRecursos);
+        chart_recursos.render();
+    });
 </script>
 
 <div id="wrapper" class="wrapper">
@@ -407,6 +561,15 @@
             </div>
           </div>
         </div>
+
+        <div class="row mt-4">
+          <div class="col-md-12">
+            <div class="box shadow mt-4 justify-content-center">
+              <div id="recursos" class="rounded shadow"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

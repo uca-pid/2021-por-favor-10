@@ -23,19 +23,6 @@
         var recursoejercicios = @json($recursoejercicios);
         var recursoclases = @json($recursoclases);
 
-        /*let test = {x: (recursoejercicios[0]).nombre , y: (recursoejercicios[0]).real , goals: [{
-                    name: 'Esperado',
-                    value: (recursoejercicios[0]).objetivo,
-                    strokeWidth: 5,
-                    strokeColor: '#775DD0'
-              }] };
-        let test2 = {x: (recursoejercicios[1]).nombre , y: (recursoejercicios[1]).real , goals: [{
-                    name: 'Esperado',
-                    value: (recursoejercicios[1]).objetivo,
-                    strokeWidth: 5,
-                    strokeColor: '#775DD0'
-              }] };*/
-
         arrayData = [];
         recursoejercicios.forEach(cargarObjetosEnData);
         recursoclases.forEach(cargarObjetosEnData);

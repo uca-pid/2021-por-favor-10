@@ -189,13 +189,6 @@
                             <span class="nav-text">Recursos</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="{{ route('estadisticasrecursos') }}">
-                                <span class="nav-icon mr-2">
-                                    <i class="fas fa-chart-bar"></i>
-                                </span>
-                                <span class="nav-text">Estadísticas</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('recursoclases') }}">
                                 <span class="nav-icon mr-2">
                                     <i class="fas fa-school"></i>
@@ -226,7 +219,7 @@
                             <span class="nav-icon">
                                 <i class="fas fa-chart-bar"></i>
                             </span>
-                            <span class="nav-text">Estadísticas</span>
+                            <span class="nav-text">Métricas clases</span>
                         </a>
                     </li>
                 </ul>
