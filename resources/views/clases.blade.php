@@ -199,9 +199,6 @@
 
 @endsection
 
-{{-- Scripts Section --}}
 @section('scripts')
-
-
 
 @endsection

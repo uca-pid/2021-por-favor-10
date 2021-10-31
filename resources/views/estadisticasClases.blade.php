@@ -82,28 +82,6 @@
     </div>
 </div>
 
-{{-- <script>
-	$(document).ready(function() {
-    	$('#itemClase').select2();
-	});
-</script>
-
-<script type="text/javascript">
-      $("form").on("submit", function (e) {
-      var data = $(this).serialize();
-      $.ajax({
-        type: "POST",
-        URL: "{{ route('dynamicsroomsend', ['name' => $name, 'code' => $code]) }}",
-        data: data,
-        success: function () {
-          console.log("funciona");
-        }
-      });
-   
-      e.preventDefault();
-      });
-    </script> --}}
-
 <script type="text/javascript">
 
     $('#submitClase').click(function() {
