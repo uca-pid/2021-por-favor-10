@@ -129,6 +129,26 @@ class ClaseTest extends TestCase
         ]);
         $response->assertStatus(500); //500 Falla
     }
+    public function testDeleteClaseByID()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $clase = Evento::firstOrFail();
+        $response = $this->get('/borrar/1');
+        $otraClase = Evento::firstOrFail();
+        $this->assertNotEquals($clase,$otraClase); // significa que borró el primer elemento porque eliminaba el de ID 1
+        $response->assertRedirect('clases');
+    }
+    public function testClaseStatisticsView()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/estadisticasClases');
+        $response->assertStatus(200);
+        $response->assertViewIs('estadisticasClases');
+    }
     public function testApiSearchClaseWorks()
     {
        $user = User::factory()->create();

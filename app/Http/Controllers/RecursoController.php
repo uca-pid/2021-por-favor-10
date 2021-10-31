@@ -140,12 +140,6 @@ class RecursoController extends Controller
         return $request;
     }
 
-    public function estadisticasrecursos(Request $request)
-    {
-        $recursoejercicios = RecursoClase::all();
-        $recursoclases = RecursoEjercicio::all();
-        return view('recursos.estadisticasrecursos')->with('recursoejercicios', $recursoejercicios)->with('recursoclases', $recursoclases);
-    }
     public function borrarRecursos(Request $request)
     {
         if( $request->tipo == 'clase')

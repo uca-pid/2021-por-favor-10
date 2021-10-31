@@ -29,15 +29,15 @@ class CreateRecursoEjerciciosTable extends Migration
             [
                 'nombre' => 'Recurso Ejercicio Test',
                 'id_ejercicios' => '["1","2"]',
-                'objetivo' => '10'
-                'real' => '5'
+                'objetivo' => '10',
+                'real' => '5',
                 'ocupacion' => '50'
             ],
             [
                 'nombre' => 'Recurso Ejercicio Test 2',
                 'id_ejercicios' => '["1"]',
-                'objetivo' => '6'
-                'real' => '3'
+                'objetivo' => '6',
+                'real' => '3',
                 'ocupacion' => '50'
             ]
         );

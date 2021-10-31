@@ -28,15 +28,15 @@ class CreateRecursoClasesTable extends Migration
             [
                 'nombre' => 'Recurso Clase Test',
                 'id_clases' => '["1","2"]',
-                'objetivo' => '10'
-                'real' => '5'
+                'objetivo' => '10',
+                'real' => '5',
                 'ocupacion' => '50'
             ],
             [
                 'nombre' => 'Recurso Clase Test 2',
                 'id_clases' => '["1"]',
-                'objetivo' => '6'
-                'real' => '3'
+                'objetivo' => '6',
+                'real' => '3',
                 'ocupacion' => '50'
             ]
         );

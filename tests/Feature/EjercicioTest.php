@@ -65,4 +65,19 @@ class EjercicioTest extends TestCase
         ]);
         $response->assertStatus(302);
     }
+
+    // API
+
+    public function testAPIEjercicioList()
+    {
+        $response = $this->get('api/ejercicios');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                 'id',
+                 'nombre',
+                 'grupo_muscular'
+            ]
+        ]);
+    }
 }

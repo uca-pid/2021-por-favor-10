@@ -80,6 +80,6 @@ Route::post('/agregarEjercicioRecurso', [App\Http\Controllers\RecursoController:
 Route::get('/estadisticasrecursos', [App\Http\Controllers\RecursoController::class, 'estadisticasrecursos'])->name('estadisticasrecursos');
 Route::get('/borrarRecursos/{tipo}/{id}', [App\Http\Controllers\RecursoController::class, 'borrarRecursos'])->name('borrarRecursos');
 
-Route::get('/coverage', function () {
+Route::get('/coverage/', function () {
     return redirect('coverage/index.html');
 });
