@@ -23,6 +23,33 @@ class CreateRecursoClasesTable extends Migration
             $table->integer('real')->nullable();
             $table->integer('ocupacion')->nullable();
         });
+
+        $data =  array(
+            [
+                'nombre' => 'Recurso Clase Test',
+                'id_clases' => '["1","2"]',
+                'objetivo' => '10'
+                'real' => '5'
+                'ocupacion' => '50'
+            ],
+            [
+                'nombre' => 'Recurso Clase Test 2',
+                'id_clases' => '["1"]',
+                'objetivo' => '6'
+                'real' => '3'
+                'ocupacion' => '50'
+            ]
+        );
+
+        foreach ($data as $dato){
+            $recursoclase = new RecursoClase();
+            $recursoclase->nombre = $dato['nombre'];
+            $recursoclase->id_clases = $dato['id_clases'];
+            $recursoclase->objetivo = $dato['objetivo'];
+            $recursoclase->real = $dato['real'];
+            $recursoclase->ocupacion = $dato['ocupacion'];
+            $recursoclase->save();
+        }
     }
 
     /**

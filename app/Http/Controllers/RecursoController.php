@@ -18,6 +18,10 @@ use DB;
 
 class RecursoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function recursoclases(Request $request)
     {
     	$clases = Evento::all();
