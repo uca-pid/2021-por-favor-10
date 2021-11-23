@@ -15,7 +15,7 @@ class ApiController extends Controller
     	$claseuser = ClaseUser::where('id_clase',$request->clase)->get();
         if( count($claseuser) == 0)
         {
-        	return "vacio";
+        	return 0;
         }
         else
         {

@@ -2,6 +2,33 @@
 
 @section('content')
 
+<script type="text/javascript">
+
+    function añadirDia(){
+
+        var element = document.createElement("select");
+        element.id = "dayOfEvent2";
+        element.className = "custom-select";
+        $('#editModal').find('.modal-body').append(element);
+
+        //Create array of options to be added
+        var array = ["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];
+        //Create and append the options
+        for (var i = 0; i < array.length; i++) {
+            var option = document.createElement("option");
+            option.value = i;
+            option.text = array[i];
+            if (i == 1) {
+                option.selected = true;
+            }
+            element.appendChild(option);
+        }
+        $('.input-group-btn').remove();
+        $('.borrable-clase').remove();
+    };
+
+</script>
+
 <script>
     var KTCalendarBasic = function() {
 
@@ -42,6 +69,8 @@
                                     var tStart = $('#tStart').val();
                                     var tEnd = $('#tEnd').val();
                                     var dayOfEvent = $('#dayOfEvent').val();
+                                    var dayOfEvent2 = $('#dayOfEvent2').val();
+                                    var recurso = $('#recurso').val();
 
                                     calendar.addEvent({
                                         title: titleOfEvent,
@@ -51,10 +80,6 @@
                                         daysOfWeek: [ dayOfEvent ],
                                         className:"fc-event-solid-primary"
                                     });
-                                    $("#titleOfEvent").val('');
-                                    $("#tStart").val('');
-                                    $("#tEnd").val('');
-                                    $("#dayOfEvent").val('');
 
                                     $.ajax({
                                       url:"{{ route('cargarClase') }}",
@@ -67,11 +92,68 @@
                                         "daysOfWeek":dayOfEvent,
                                       },
                                       success:function(response){
-                                        console.log(response);
+
+                                        $.ajax({
+                                          url:"{{ route('agregarClaseRecurso') }}",
+                                          type:"POST",
+                                          data:{
+                                            "_token":"{{ csrf_token() }}",
+                                            "recurso":recurso,
+                                            "clase":response.id,
+                                          },
+                                          });
+
                                       },
                                       error: function(xhr, textStatus, error){
                                       }
                                     });
+
+                                    if(typeof dayOfEvent2 != 'undefined'){
+
+                                        calendar.addEvent({
+                                            title: titleOfEvent,
+                                            startTime: tStart,
+                                            endTime: tEnd,
+                                            allDay: false,
+                                            daysOfWeek: [ dayOfEvent2 ],
+                                            className:"fc-event-solid-primary"
+                                        });
+
+                                        $.ajax({
+                                          url:"{{ route('cargarClase') }}",
+                                          type:"POST",
+                                          data:{
+                                            "_token":"{{ csrf_token() }}",
+                                            "title":titleOfEvent,
+                                            "startTime":tStart,
+                                            "endTime":tEnd,
+                                            "daysOfWeek":dayOfEvent2,
+                                          },
+                                          success:function(response){
+
+                                            $.ajax({
+                                                url:"{{ route('agregarClaseRecurso') }}",
+                                                type:"POST",
+                                                data:{
+                                                    "_token":"{{ csrf_token() }}",
+                                                    "recurso":recurso,
+                                                    "clase":response.id,
+                                                },
+                                            });
+
+                                          },
+                                          error: function(xhr, textStatus, error){
+                                          }
+                                        });
+
+                                    }
+
+                                    $("#titleOfEvent").val('');
+                                    $("#tStart").val('');
+                                    $("#tEnd").val('');
+                                    $("#dayOfEvent").val('');
+                                    $('#dayOfEvent2').val('');
+                                    $('#recurso').val('');
 
                                     $('#editModal').modal('hide');
                                 });
@@ -174,10 +256,24 @@
                         <option value="23:00">23:00</option>
                       </select>
                     <br>
+                    <br> 
+                    Recurso:
+                    <br />
+                      <select class="custom-select" id="recurso">
+                        @foreach($recursos as $recurso)
+                        <option value="{{$recurso->id}}">{{$recurso->nombre}}</option>
+                        @endforeach
+                      </select>
+                    <br>
                     <br>
                     Dia de la semana:
                     <br />
-                      <select class="custom-select" id="dayOfEvent">
+                    <br class="borrable-clase">
+                    <div class="input-group-btn">
+                        <button class="btn btn-success add-more" type="button" onclick="añadirDia()"><i class="fas fa-plus"></i> Añadir Dia</button>
+                    </div>
+                    <br class="borrable-clase">
+                    <select class="custom-select" id="dayOfEvent">
                         <option value="1">Lunes</option>
                         <option value="2">Martes</option>
                         <option value="3">Miercoles</option>
@@ -185,7 +281,7 @@
                         <option value="5">Viernes</option>
                         <option value="6">Sabado</option>
                         <option value="0">Domingo</option>
-                      </select>
+                    </select>
                 </div>
 
                 <div class="modal-footer">

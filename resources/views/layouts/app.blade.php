@@ -202,6 +202,14 @@
                                 </span>
                                 <span class="nav-text">Ejercicios</span>
                             </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ route('editarRecursos') }}">
+                                <span class="nav-icon mr-2">
+                                    <i class="far fa-edit"></i>
+                                </span>
+                                <span class="nav-text">Editar</span>
+                            </a>
+
                         </div>
                     </li>
 

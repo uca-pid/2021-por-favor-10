@@ -27,7 +27,7 @@
 						      <select class="form-control" name="clase" id="clase">
 						 	  	@foreach ($clases as $clase)
 
-								    <option value="{{$clase->id}}">{{$clase->title}}  {{$clase->start}}-{{$clase->end}}</option>
+								    <option value="{{$clase->id}}">{{$clase->title}}  {{$clase->start}}-{{$clase->end}} Dia: {{$clase->day}}</option>
 
 					 			@endforeach     										 		
 						      </select>

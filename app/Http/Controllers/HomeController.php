@@ -137,7 +137,8 @@ class HomeController extends Controller
 
     public function clases()
     {
-        return view('clases');
+        $recursos = RecursoClase::all();
+        return view('clases')->with('recursos', $recursos);
     }
 
     public function cargarClase(Request $request)

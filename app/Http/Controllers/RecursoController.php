@@ -28,6 +28,41 @@ class RecursoController extends Controller
     	$recursos = RecursoClase::all();
         return view('recursos.recursoclases')->with('clases', $clases)->with('recursos', $recursos);
     }
+    public function listaEditar(Request $request)
+    {
+        $recursosclases = RecursoClase::all();
+        $recursosejercicios = RecursoEjercicio::all();
+        return view('recursos.modificarRecursos')->with('recursosclases', $recursosclases)->with('recursosejercicios', $recursosejercicios);
+    }
+    public function recursoaEditar(Request $request)
+    {
+        if($request->tipo == 'ejercicios')
+        {
+            $recursoejercicio = RecursoEjercicio::where('id',$request->id)->get();
+            return view('recursos.detalleRecurso')->with('recurso',$recursoejercicio[0])->with('tipo', $request->tipo);
+        }
+        elseif ($request->tipo == 'clases') {
+            $recursoclase = RecursoClase::where('id',$request->id)->get();
+            return view('recursos.detalleRecurso')->with('recurso',$recursoclase[0])->with('tipo', $request->tipo);
+        }
+    }
+    public function generarCambioRecurso(Request $request)
+    {
+        if($request->tipo == 'ejercicios')
+        {
+            $recursoejercicio = RecursoEjercicio::where('id',$request->id)->get();
+            $nuevaocupacion = ((($recursoejercicio[0])->real)/$request->objetivo)*100;
+            $recursoedit = RecursoEjercicio::where('id',$request->id)->update([ 'nombre' => $request->nombre , 'objetivo' => $request->objetivo , 'ocupacion' => $nuevaocupacion ]);
+            return redirect()->route('editarRecursos')->with('success','Se ha editado el recurso!');
+        }
+        elseif ($request->tipo == 'clases') 
+        {     
+            $recursoclase = RecursoClase::where('id',$request->id)->get();
+            $nuevaocupacion = ((($recursoclase[0])->real)/$request->objetivo)*100;
+            $recursoedit = RecursoClase::where('id',$request->id)->update([ 'nombre' => $request->nombre , 'objetivo' => $request->objetivo, 'ocupacion' => $nuevaocupacion ]);
+            return redirect()->route('editarRecursos')->with('success','Se ha editado el recurso!');
+        }
+    }
     public function crearRecursoClase(Request $request)
     {
         RecursoClase::create([ 'nombre' => $request->nombre_rec , 'id_clases' => null , 'objetivo' => $request->objetivo_rec , 'real' => null,  'ocupacion' => null]);
@@ -142,12 +177,12 @@ class RecursoController extends Controller
 
     public function borrarRecursos(Request $request)
     {
-        if( $request->tipo == 'clase')
+        if( $request->tipo == 'clases')
         {
             RecursoClase::where('id',$request->id)->delete();
             return redirect()->route('recursoclases')->with('success','Se ha borrado el recurso!');
         }
-        elseif ($request->tipo == 'ejercicio') {
+        elseif ($request->tipo == 'ejercicios') {
             RecursoEjercicio::where('id',$request->id)->delete();
             return redirect()->route('recursoejercicios')->with('success','Se ha borrado el recurso!');
         }

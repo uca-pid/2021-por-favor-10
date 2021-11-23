@@ -131,8 +131,9 @@ class RutinasController extends Controller
             DB::rollBack();
             return redirect()->back();
         }
-
-        return view('rutinas.detalleRutina', compact('rutina','ejercicios'));
+        return redirect()->route('rutinas')->with('success','La rutina se edito correctamente!');
+        //return view('rutinas.detalleRutina')->with('rutina',$rutina)->with('ejercicios',$ejercicios)->with('success','La rutina se edito correctamente!');
+        //return view('rutinas.detalleRutina', compact('rutina','ejercicios'))->with('success','La rutina se edito correctamente!');
     }
 
     public function rutinaCliente()

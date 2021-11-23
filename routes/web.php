@@ -45,6 +45,10 @@ Route::get('/recursoclases', [App\Http\Controllers\RecursoController::class, 're
 Route::post('/crearRecursoClase', [App\Http\Controllers\RecursoController::class, 'crearRecursoClase'])->name('crearRecursoClase');
 Route::post('/agregarClaseRecurso', [App\Http\Controllers\RecursoController::class, 'agregarClaseRecurso'])->name('agregarClaseRecurso');
 
+Route::get('/editarRecursos', [App\Http\Controllers\RecursoController::class, 'listaEditar'])->name('editarRecursos');
+Route::get('/recursoaEditar/{id}/{tipo}', [App\Http\Controllers\RecursoController::class, 'recursoaEditar'])->name('recursoaEditar');
+Route::post('/generarCambioRecurso', [App\Http\Controllers\RecursoController::class, 'generarCambioRecurso'])->name('generarCambioRecurso');
+
 Route::get('/recursoejercicios', [App\Http\Controllers\RecursoController::class, 'recursoejercicios'])->name('recursoejercicios');
 Route::post('/crearRecursoEjercicio', [App\Http\Controllers\RecursoController::class, 'crearRecursoEjercicio'])->name('crearRecursoEjercicio');
 Route::post('/agregarEjercicioRecurso', [App\Http\Controllers\RecursoController::class, 'agregarEjercicioRecurso'])->name('agregarEjercicioRecurso');
