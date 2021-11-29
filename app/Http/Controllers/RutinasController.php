@@ -69,11 +69,11 @@ class RutinasController extends Controller
         try {
             Rutina::create([ 'nombre' => $request->nombre, 'ejercicios' => json_encode($ejerciciosRutina), 'icono' => $icono ]);
             DB::commit();
+            return redirect()->route('rutinas')->with('success','La rutina se creó correctamente!');
         } catch (Exception $e) {
             DB::rollBack();
+            return redirect()->route('rutinas')->with('failed','Ocurrió un problema al crear la rutina.');
         }
-
-        return redirect()->route('rutinas');
     }
 
     public function detalleRutina($id)
@@ -134,6 +134,15 @@ class RutinasController extends Controller
         return redirect()->route('rutinas')->with('success','La rutina se edito correctamente!');
         //return view('rutinas.detalleRutina')->with('rutina',$rutina)->with('ejercicios',$ejercicios)->with('success','La rutina se edito correctamente!');
         //return view('rutinas.detalleRutina', compact('rutina','ejercicios'))->with('success','La rutina se edito correctamente!');
+    }
+
+    public function eliminarRutina(Request $request, $id){
+        try {
+            Rutina::where('id', $id)->delete();
+            RutinaCliente::where('id_rutina', $id)->delete();
+        } catch (Exception $e) {
+            return 'error';
+        }
     }
 
     public function rutinaCliente()

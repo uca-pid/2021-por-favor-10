@@ -307,6 +307,15 @@
               opacity: 0.2,
             }
           },
+          title: {
+              text: 'Registro de clientes (últimos 6 meses)',
+              align: 'right',
+              margin: 0,
+              style: {
+                fontSize: '15px',
+                color: 'white'
+              }
+          },
           series: [{
             data: clientes_por_mes
           }],
@@ -323,10 +332,16 @@
               left: 110
             }
           },
+          xaxis: {
+            categories: ['Hace 6 meses', 'Hace 5 meses', 'Hace 4 meses', 'Hace 3 meses', 'Hace 2 meses', 'Hace 1 mes'],
+            tooltip: {
+              enabled: false
+            }
+          },
           colors: ['#fff'],
           tooltip: {
             x: {
-              show: false
+              show: true
             },
             y: {
               formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {

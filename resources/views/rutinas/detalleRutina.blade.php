@@ -53,9 +53,19 @@
 
     function selectIcon(icon_id) {
         $('#icono_rutina').val(icon_id);
-        $('#modal-icon').modal('toggle');
+        toggleDivIconos();
         $('#icono_seleccionado').removeAttr('hidden');
         $('#icono_seleccionado').attr('class', icon_id+' fa-2x mr-5');
+    }
+
+    function toggleDivIconos() {
+        let display = $('#div_iconos').css('display');
+        if (display == 'none') {
+            display = 'flex';
+        } else {
+            display = 'none';
+        }
+        $('#div_iconos').css('display', display);
     }
 
 </script>
@@ -78,8 +88,24 @@
                     <label for="nombre" class="col-sm-2 col-form-label">Ícono</label>
                     <div class="col-sm-10 d-flex justify-content-end align-items-center">
                         <i id="icono_seleccionado" class="{{ $rutina->icono }} fa-2x mr-5"></i>
-                        <a class="btn btn-info" data-toggle="modal" href='#modal-icon'>Elegir ícono</a>
+                        <a class="btn btn-info" onclick="toggleDivIconos()">Elegir ícono</a>
                         <input type="text" hidden name="icono_rutina" id="icono_rutina">
+                    </div>
+                </div>
+
+                <div id="div_iconos" style="display: none;">
+                    <div class="modal-content">
+                        <div style="align-items: flex-end; margin-top: 10px; margin-right: 20px;">
+                            <button type="button" class="close" onclick="toggleDivIconos()">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="search" placeholder="Buscar..." name="search" class="form-control searchbox-input">
+                            <br>
+                            <div id="modal-icon-icons" style="height: 280px; overflow-y: scroll;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <br>
+                        </div>
                     </div>
                 </div>
                 <hr/>

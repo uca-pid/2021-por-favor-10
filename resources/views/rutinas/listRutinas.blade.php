@@ -67,13 +67,56 @@
             }
             //$('#modal-icon-icons').find(".icon-item:not(:contains(" + $(this).val() + "))").css('display','none');
         });
+
+
+        $(".eliminar-rutina").click(function(e) {
+            Swal.fire({
+                title: "¿Seguro desea eliminar esta rutina?",
+                text: "Los clientes que tengan asociada esta rutina dejarán de estarlo.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Si, eliminar."
+            }).then(function(result) {
+                let boton_id = e.target.id;
+                let rutina_id = boton_id.split("_").pop();
+                console.log(rutina_id);
+                if (result.value) {
+                    $.ajax({
+                      type: "POST",
+                      url: '/rutina/eliminar/'+rutina_id,
+                      headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                    });
+                    Swal.fire({
+                      title: "Rutina eliminada.",
+                      text: "La rutina se eliminó correctamente.",
+                      icon: "success",
+                      timer: 1500
+                    });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1600);
+
+                }
+            });
+        });
+
     });
 
     function selectIcon(icon_id) {
         $('#icono_rutina').val(icon_id);
-        $('#modal-icon').modal('toggle');
+        toggleDivIconos();
         $('#icono_seleccionado').removeAttr('hidden');
         $('#icono_seleccionado').attr('class', icon_id+' fa-2x mr-5');
+    }
+
+    function toggleDivIconos() {
+        let display = $('#div_iconos').css('display');
+        if (display == 'none') {
+            display = 'flex';
+        } else {
+            display = 'none';
+        }
+        $('#div_iconos').css('display', display);
     }
 
 </script>
@@ -145,7 +188,10 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <button class="btn btn-outline-primary" onclick="window.location='{{ route("rutina_detalle",$rutina->id) }}'">Editar</button>
+                                        <div class="row" style="justify-content: space-evenly;">
+                                            <button class="btn btn-outline-primary" style="margin-right: 20px" onclick="window.location='{{ route("rutina_detalle",$rutina->id) }}'">Editar</button>
+                                            <button class="btn btn-outline-danger eliminar-rutina" id="eliminar_rutina_{{ $rutina->id }}">Eliminar</button>
+                                        </div>
                                     </div>
                                   </div>
                                  </div>
@@ -167,7 +213,10 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             @csrf
-                            <h4>Crear rutina</h4>
+                            <div class="row" style="justify-content: space-between;">
+                                <h4 style="margin-left: 10px;">Crear rutina</h4>
+                                <span class="btn btn-outline-primary" style="margin-right: 10px" data-target="#modal" data-toggle="modal">X</button>
+                            </div>
 
                             <br />
                             <div class="form-group row">
@@ -181,10 +230,27 @@
                                 <label for="nombre" class="col-sm-2 col-form-label">Ícono</label>
                                 <div class="col-sm-10 d-flex justify-content-end align-items-center">
                                     <i id="icono_seleccionado" hidden class=""></i>
-                                    <a class="btn btn-info" data-toggle="modal" href='#modal-icon'>Elegir ícono</a>
+                                    <a class="btn btn-info" onclick="toggleDivIconos()">Elegir ícono</a>
                                     <input type="text" hidden name="icono_rutina" id="icono_rutina">
                                 </div>
                             </div>
+
+                            <div id="div_iconos" style="display: none;">
+                                <div class="modal-content">
+                                    <div style="align-items: flex-end; margin-top: 10px; margin-right: 20px;">
+                                        <button type="button" class="close" onclick="toggleDivIconos()">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="search" placeholder="Buscar..." name="search" class="form-control searchbox-input">
+                                        <br>
+                                        <div id="modal-icon-icons" style="height: 280px; overflow-y: scroll;">
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+
                             <hr/>
 
                             <h6>Ejercicios</h6>
@@ -192,143 +258,177 @@
                             <br />
                             <label>Dia 1:</label>
                             <div class="input-group control-group after-add-more" id="dia1">
-                              {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
 
-                                <select class="form-control" name="ejercicios_dia1[]">
-                                    <option value="" selected hidden>Seleccione un ejercicio</option>
-                                    @foreach($ejercicios as $ejercicio)
-                                        <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="text" class="form-control" name="repeticiones_dia1[]">
-
-                              <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia1')"><i class="fas fa-plus"></i> Añadir</button>
-                              </div>
                             </div>
                             <br />
                             <button class="btn btn-secondary mb-4" type="button" id="descansodia1" onclick="diaDescanso('dia1')"><i class="fas fa-moon"></i> Día de descanso</button>
+                            <button class="btn btn-success mb-4 add-more" type="button" onclick="añadirEjercicio('dia1')"><i class="fas fa-plus"></i> Añadir ejercicio</button>
+
+                            <div style="display: none;">
+                                <div class="control-group input-group removable" style="margin-top:10px">
+                                    <select class="form-control" name="ejercicios_dia1[]">
+                                        <option value="" selected hidden>Seleccione un ejercicio</option>
+                                        @foreach($ejercicios as $ejercicio)
+                                            <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" class="form-control" name="repeticiones_dia1[]">
+
+                                    <div class="input-group-btn">
+                                      <button class="btn btn-danger remove" type="button" onclick="eliminarEjercicio(this)"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <br />
                             <label>Dia 2:</label>
                             <div class="input-group control-group after-add-more" id="dia2">
-                              {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
 
-                                <select class="form-control" name="ejercicios_dia2[]">
-                                    <option value="" selected hidden>Seleccione un ejercicio</option>
-                                    @foreach($ejercicios as $ejercicio)
-                                        <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="text" class="form-control" name="repeticiones_dia2[]">
-
-                              <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia2')"><i class="fas fa-plus"></i> Añadir</button>
-                              </div>
                             </div>
                             <br />
                             <button class="btn btn-secondary mb-4" type="button" id="descansodia2" onclick="diaDescanso('dia2')"><i class="fas fa-moon"></i> Día de descanso</button>
+                            <button class="btn btn-success mb-4 add-more" type="button" onclick="añadirEjercicio('dia2')"><i class="fas fa-plus"></i> Añadir ejercicio</button>
+
+                            <div style="display: none;">
+                                <div class="control-group input-group removable" style="margin-top:10px">
+                                    <select class="form-control" name="ejercicios_dia2[]">
+                                        <option value="" selected hidden>Seleccione un ejercicio</option>
+                                        @foreach($ejercicios as $ejercicio)
+                                            <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" class="form-control" name="repeticiones_dia2[]">
+
+                                    <div class="input-group-btn">
+                                      <button class="btn btn-danger remove" type="button" onclick="eliminarEjercicio(this)"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <br />
                             <label>Dia 3:</label>
                             <div class="input-group control-group after-add-more" id="dia3">
-                              {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
 
-                                <select class="form-control" name="ejercicios_dia3[]">
-                                    <option value="" selected hidden>Seleccione un ejercicio</option>
-                                    @foreach($ejercicios as $ejercicio)
-                                        <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="text" class="form-control" name="repeticiones_dia3[]">
-
-                              <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia3')"><i class="fas fa-plus"></i> Añadir</button>
-                              </div>
                             </div>
                             <br />
                             <button class="btn btn-secondary mb-4" type="button" id="descansodia3" onclick="diaDescanso('dia3')"><i class="fas fa-moon"></i> Día de descanso</button>
+                            <button class="btn btn-success mb-4 add-more" type="button" onclick="añadirEjercicio('dia3')"><i class="fas fa-plus"></i> Añadir ejercicio</button>
+
+                            <div style="display: none;">
+                                <div class="control-group input-group removable" style="margin-top:10px">
+                                    <select class="form-control" name="ejercicios_dia3[]">
+                                        <option value="" selected hidden>Seleccione un ejercicio</option>
+                                        @foreach($ejercicios as $ejercicio)
+                                            <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" class="form-control" name="repeticiones_dia3[]">
+
+                                    <div class="input-group-btn">
+                                      <button class="btn btn-danger remove" type="button" onclick="eliminarEjercicio(this)"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <br />
                             <label>Dia 4:</label>
                             <div class="input-group control-group after-add-more" id="dia4">
-                              {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
 
-                                <select class="form-control" name="ejercicios_dia4[]">
-                                    <option value="" selected hidden>Seleccione un ejercicio</option>
-                                    @foreach($ejercicios as $ejercicio)
-                                        <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="text" class="form-control" name="repeticiones_dia4[]">
-
-                              <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia4')"><i class="fas fa-plus"></i> Añadir</button>
-                              </div>
                             </div>
                             <br />
                             <button class="btn btn-secondary mb-4" type="button" id="descansodia4" onclick="diaDescanso('dia4')"><i class="fas fa-moon"></i> Día de descanso</button>
+                            <button class="btn btn-success mb-4 add-more" type="button" onclick="añadirEjercicio('dia4')"><i class="fas fa-plus"></i> Añadir ejercicio</button>
+
+                            <div style="display: none;">
+                                <div class="control-group input-group removable" style="margin-top:10px">
+                                    <select class="form-control" name="ejercicios_dia4[]">
+                                        <option value="" selected hidden>Seleccione un ejercicio</option>
+                                        @foreach($ejercicios as $ejercicio)
+                                            <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" class="form-control" name="repeticiones_dia4[]">
+
+                                    <div class="input-group-btn">
+                                      <button class="btn btn-danger remove" type="button" onclick="eliminarEjercicio(this)"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <br />
                             <label>Dia 5:</label>
                             <div class="input-group control-group after-add-more" id="dia5">
-                              {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
 
-                                <select class="form-control" name="ejercicios_dia5[]">
-                                    <option value="" selected hidden>Seleccione un ejercicio</option>
-                                    @foreach($ejercicios as $ejercicio)
-                                        <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="text" class="form-control" name="repeticiones_dia5[]">
-
-                              <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia5')"><i class="fas fa-plus"></i> Añadir</button>
-                              </div>
                             </div>
                             <br />
                             <button class="btn btn-secondary mb-4" type="button" id="descansodia5" onclick="diaDescanso('dia5')"><i class="fas fa-moon"></i> Día de descanso</button>
+                            <button class="btn btn-success mb-4 add-more" type="button" onclick="añadirEjercicio('dia5')"><i class="fas fa-plus"></i> Añadir ejercicio</button>
+
+                            <div style="display: none;">
+                                <div class="control-group input-group removable" style="margin-top:10px">
+                                    <select class="form-control" name="ejercicios_dia5[]">
+                                        <option value="" selected hidden>Seleccione un ejercicio</option>
+                                        @foreach($ejercicios as $ejercicio)
+                                            <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" class="form-control" name="repeticiones_dia5[]">
+
+                                    <div class="input-group-btn">
+                                      <button class="btn btn-danger remove" type="button" onclick="eliminarEjercicio(this)"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <br />
                             <label>Dia 6:</label>
                             <div class="input-group control-group after-add-more" id="dia6">
-                              {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
 
-                                <select class="form-control" name="ejercicios_dia6[]">
-                                    <option value="" selected hidden>Seleccione un ejercicio</option>
-                                    @foreach($ejercicios as $ejercicio)
-                                        <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="text" class="form-control" name="repeticiones_dia6[]">
-
-                              <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia6')"><i class="fas fa-plus"></i> Añadir</button>
-                              </div>
                             </div>
                             <br />
                             <button class="btn btn-secondary mb-4" type="button" id="descansodia6" onclick="diaDescanso('dia6')"><i class="fas fa-moon"></i> Día de descanso</button>
+                            <button class="btn btn-success mb-4 add-more" type="button" onclick="añadirEjercicio('dia6')"><i class="fas fa-plus"></i> Añadir ejercicio</button>
+
+                            <div style="display: none;">
+                                <div class="control-group input-group removable" style="margin-top:10px">
+                                    <select class="form-control" name="ejercicios_dia6[]">
+                                        <option value="" selected hidden>Seleccione un ejercicio</option>
+                                        @foreach($ejercicios as $ejercicio)
+                                            <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" class="form-control" name="repeticiones_dia6[]">
+
+                                    <div class="input-group-btn">
+                                      <button class="btn btn-danger remove" type="button" onclick="eliminarEjercicio(this)"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
 
                             <br />
                             <label>Dia 7:</label>
                             <div class="input-group control-group after-add-more" id="dia7">
-                              {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
 
-                                <select class="form-control" name="ejercicios_dia7[]">
-                                    <option value="" selected hidden>Seleccione un ejercicio</option>
-                                    @foreach($ejercicios as $ejercicio)
-                                        <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="text" class="form-control" name="repeticiones_dia7[]">
-
-                              <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia7')"><i class="fas fa-plus"></i> Añadir</button>
-                              </div>
                             </div>
                             <br />
                             <button class="btn btn-secondary mb-4" type="button" id="descansodia7" onclick="diaDescanso('dia7')"><i class="fas fa-moon"></i> Día de descanso</button>
+                            <button class="btn btn-success mb-4 add-more" type="button" onclick="añadirEjercicio('dia7')"><i class="fas fa-plus"></i> Añadir ejercicio</button>
 
+                            <div style="display: none;">
+                                <div class="control-group input-group removable" style="margin-top:10px">
+                                    <select class="form-control" name="ejercicios_dia7[]">
+                                        <option value="" selected hidden>Seleccione un ejercicio</option>
+                                        @foreach($ejercicios as $ejercicio)
+                                            <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" class="form-control" name="repeticiones_dia7[]">
+
+                                    <div class="input-group-btn">
+                                      <button class="btn btn-danger remove" type="button" onclick="eliminarEjercicio(this)"><i class="far fa-trash-alt"></i> Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="modal-footer">
@@ -337,185 +437,6 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
-
-
-        {{-- modal icono --}}
-        <div class="modal fade" id="modal-icon">
-            <div class="modal-dialog" style="width: 90%;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Íconos para rutinas</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{-- <input type="search" placeholder="Buscar..." name="search" class="form-control searchbox-input">
-                        <br> --}}
-                        <div id="modal-icon-icons" style="height: 280px; overflow-y: scroll;">
-                        </div>
-                        <div class="clearfix"></div>
-                        <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- modal editar --}}
-        <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <form method="POST" action="{{ route('rutina_crear') }}">
-                @foreach($rutinas as $rutina)
-                    @if(true)
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    @csrf
-                                    <h4>Editar rutina</h4>
-
-                                    Nombre
-                                    <br />
-                                    <input type="text" class="form-control" name="nombre" id="nombre">
-
-                                    <br />
-                                    Ejercicios
-
-
-                                    <br />
-                                    <label>Dia 1:</label>
-                                    <div class="input-group control-group after-add-more" id="dia1">
-                                      {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
-
-                                        <select class="form-control" name="ejercicios_dia1[]">
-                                            <option value="" selected hidden>Seleccione un ejercicio</option>
-                                            @foreach($ejercicios as $ejercicio)
-                                                <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" class="form-control" name="repeticiones_dia1[]">
-
-                                      <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia1')"><i class="fas fa-plus"></i> Añadir</button>
-                                      </div>
-                                    </div>
-
-                                    <br />
-                                    <label>Dia 2:</label>
-                                    <div class="input-group control-group after-add-more" id="dia2">
-                                      {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
-
-                                        <select class="form-control" name="ejercicios_dia2[]">
-                                            <option value="" selected hidden>Seleccione un ejercicio</option>
-                                            @foreach($ejercicios as $ejercicio)
-                                                <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" class="form-control" name="repeticiones_dia2[]">
-
-                                      <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia2')"><i class="fas fa-plus"></i> Añadir</button>
-                                      </div>
-                                    </div>
-
-                                    <br />
-                                    <label>Dia 3:</label>
-                                    <div class="input-group control-group after-add-more" id="dia3">
-                                      {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
-
-                                        <select class="form-control" name="ejercicios_dia3[]">
-                                            <option value="" selected hidden>Seleccione un ejercicio</option>
-                                            @foreach($ejercicios as $ejercicio)
-                                                <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" class="form-control" name="repeticiones_dia3[]">
-
-                                      <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia3')"><i class="fas fa-plus"></i> Añadir</button>
-                                      </div>
-                                    </div>
-
-                                    <br />
-                                    <label>Dia 4:</label>
-                                    <div class="input-group control-group after-add-more" id="dia4">
-                                      {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
-
-                                        <select class="form-control" name="ejercicios_dia4[]">
-                                            <option value="" selected hidden>Seleccione un ejercicio</option>
-                                            @foreach($ejercicios as $ejercicio)
-                                                <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" class="form-control" name="repeticiones_dia4[]">
-
-                                      <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia4')"><i class="fas fa-plus"></i> Añadir</button>
-                                      </div>
-                                    </div>
-
-                                    <br />
-                                    <label>Dia 5:</label>
-                                    <div class="input-group control-group after-add-more" id="dia5">
-                                      {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
-
-                                        <select class="form-control" name="ejercicios_dia5[]">
-                                            <option value="" selected hidden>Seleccione un ejercicio</option>
-                                            @foreach($ejercicios as $ejercicio)
-                                                <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" class="form-control" name="repeticiones_dia5[]">
-
-                                      <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia5')"><i class="fas fa-plus"></i> Añadir</button>
-                                      </div>
-                                    </div>
-
-                                    <br />
-                                    <label>Dia 6:</label>
-                                    <div class="input-group control-group after-add-more" id="dia6">
-                                      {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
-
-                                        <select class="form-control" name="ejercicios_dia6[]">
-                                            <option value="" selected hidden>Seleccione un ejercicio</option>
-                                            @foreach($ejercicios as $ejercicio)
-                                                <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" class="form-control" name="repeticiones_dia6[]">
-
-                                      <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia6')"><i class="fas fa-plus"></i> Añadir</button>
-                                      </div>
-                                    </div>
-
-                                    <br />
-                                    <label>Dia 7:</label>
-                                    <div class="input-group control-group after-add-more" id="dia7">
-                                      {{-- <input type="text" name="addmore[]" class="form-control" placeholder="Enter Name Here"> --}}
-
-                                        <select class="form-control" name="ejercicios_dia7[]">
-                                            <option value="" selected hidden>Seleccione un ejercicio</option>
-                                            @foreach($ejercicios as $ejercicio)
-                                                <option value="{{ $ejercicio->id }}">{{ $ejercicio->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" class="form-control" name="repeticiones_dia7[]">
-
-                                      <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button" onclick="añadirEjercicio('dia7')"><i class="fas fa-plus"></i> Añadir</button>
-                                      </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary" id="crear_rutina">Crear</button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                @endforeach
             </form>
         </div>
 
